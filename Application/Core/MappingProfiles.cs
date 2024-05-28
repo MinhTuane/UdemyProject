@@ -12,6 +12,9 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<Activity,Activity>();
+            CreateMap<Material,Material>();
+            CreateMap<Product,Product>();
+            CreateMap<ProductLine,ProductLine>();
         }
     }
 }

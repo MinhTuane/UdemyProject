@@ -1,25 +1,25 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Header,List } from "semantic-ui-react";
-import { Activity } from "./app/models/activity";
-
+import { Container } from "semantic-ui-react";
+import NavBar from "./NavBar";
+import { observer } from "mobx-react-lite";
+import { Outlet, useLocation } from "react-router-dom";
+import HomePage from "../../features/home/HomePage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-    const [activities,setActivities] = useState<Activity[]>([]);
+    const location = useLocation();
+    return (
+        <>
+            <ToastContainer position="bottom-right" hideProgressBar theme="colored"/>
+            {location.pathname === '/' ? <HomePage /> : (
+                <>
+                    <NavBar />
+                    <Container style={{ marginTop: '7em' }}>
+                        <Outlet />
+                    </Container>
+                </>
+            )}
 
-    useEffect(()=> {
-        axios.get<Activity[]>('http://localhost:5000/api/activities')
-        .then(res => {
-            setActivities(res.data)
-        })
-    },[])
-    return(
-        <div>
-            <Header as='h2' icon='users' content='Reactivities'/>
-            <List>
-                
-            </List>
-        </div>
+        </>
     )
 }
-export default App;
+export default observer(App);
