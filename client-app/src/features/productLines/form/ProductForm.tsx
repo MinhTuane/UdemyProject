@@ -85,7 +85,7 @@ export default observer(function ProductForm() {
                                 <MaterialListItem
                                     key={material.id}
                                     material={material}
-                                    handleAddMaterial={() => handleAddMaterial}
+                                    handleAddMaterial={handleAddMaterial}
                                     handleRemoveMaterial={() => handleRemoveMaterial}
                                 />
                             ))

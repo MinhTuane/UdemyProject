@@ -11,9 +11,10 @@ export default class ProductLineStore {
 
     loadingInitial = false;
     productLines= new Map<string,ProductLine>();
+    choosingLine : ProductLine | null = null;
 
     loadProductLines = async()=>{
-        this.loadingInitial = true;
+        this.setInitialLoading(true);
 
         try {
             const productLines = await agent.ProductLines.list();
@@ -24,15 +25,41 @@ export default class ProductLineStore {
                     this.setProductLine(productLine)
                 })
                 console.log(this.productLines);
-                
+                if(this.choosingLine == undefined) {
+                    this.setChoosingLine(productLines[0])
+                }
             })
-            this.loadingInitial=false;
+            this.setInitialLoading(false);
         } catch (error) {
-            this.loadingInitial = false;
+            this.setInitialLoading(false);
         }
     }
+
+    get productLineByStatus() {
+        return Array.from(this.productLines.values())
+        .sort((a,b) => a.title!.localeCompare(b.title!));
+    }
     
+    get groupedLineStatus() {
+        return Object.entries(
+            this.productLineByStatus.reduce((productLines,productLine)=>{
+                const status = productLine.status
+                productLines[status] = productLines[status] ? [...productLines[status],productLine] : [productLine];
+                return productLines;
+            },{} as {[key:string]:ProductLine[]})
+            
+        )
+    }
+
     setProductLine(productLine: ProductLine) {
         this.productLines.set(productLine.id,productLine)
+    }
+
+    setInitialLoading(flag:boolean) {
+        this.loadingInitial = flag;
+    }
+
+    setChoosingLine=(productLine : ProductLine)=> {
+         this.choosingLine = productLine;
     }
 }

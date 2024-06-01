@@ -1,6 +1,6 @@
 import { ProductLine } from "../../../../app/models/productLine";
 import { useStore } from "../../../../app/stores/store"
-import ProductLineListItem from "./ProductLineListItem";
+import ProductLineListItem from "./ListItem";
 
 export default function ProductLineList() {
     const {productLineStore} = useStore();

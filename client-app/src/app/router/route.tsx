@@ -9,7 +9,7 @@ import ServerError from "../../features/errors/ServerError";
 import LoginForm from "../../features/users/LoginForm";
 import MaterialForm from "../../features/activities/form/MaterialForm";
 import ProductForm from "../../features/productLines/form/ProductForm";
-import ProductLineDashBoard from "../../features/productLines/Dashboard/ProductLine/ProductLineDashBoard";
+import DashBoard from "../../features/productLines/Dashboard/ProductLine/DashBoard";
 
 export const routes: RouteObject[] = [
     {
@@ -17,8 +17,8 @@ export const routes: RouteObject[] = [
         element: <App/>,
         children:[
             {path:'activities',element:<ActivityDashboard/>},
-            {path:'productLine',element:<ProductLineDashBoard/>},
             {path:'activities/:id',element:<ActivityDetails/>},
+            {path:'productLineDashBoard',element:<DashBoard/>},
             {path:'createActivity',element:<ActivityForm key='create'/>},
             {path:'manage/:id',element:<ActivityForm key='edit'/>},
             {path:'createMaterial',element:<MaterialForm key='create'/>},

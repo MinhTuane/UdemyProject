@@ -6,6 +6,7 @@ import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Material } from "../models/material";
 import { ProductLine } from "../models/productLine";
+import { Product } from "../models/product";
 
 
 const sleep = (delay: number) => {
@@ -104,11 +105,20 @@ const ProductLines = {
     delete: (id:string) => axios.delete<void>(`/productlines/${id}`)
 }
 
+const Products = {
+    list: () => request.get<Product[]>('/productlines'),
+    details:(id:string) => request.get<Product>(`/productlines/${id}`),
+    create: (product:Product) => axios.post<void>('/products',product),
+    update: (product:Product) => axios.post<void>(`/products/${product.id}`,product),
+    delete: (id:string) => axios.delete<void>(`/products/${id}`)
+}
+
 const agent = {
     Activities,
     Account,
     Materials,
-    ProductLines
+    ProductLines,
+    Products
 }
 
 export default agent;

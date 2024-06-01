@@ -4,6 +4,7 @@ import CommonStore from "./commonStore";
 import UserStore from "./userStore";
 import MaterialStore from "./materialStore";
 import ProductLineStore from "./productLineStore";
+import ProductStore from "./productStore";
 
 
 interface Store {
@@ -12,6 +13,7 @@ interface Store {
     userStore: UserStore;
     materialStore : MaterialStore;
     productLineStore : ProductLineStore;
+    productStore : ProductStore;
 }
 
 export const store : Store = {
@@ -20,6 +22,7 @@ export const store : Store = {
     userStore : new UserStore(),
     materialStore : new MaterialStore(),
     productLineStore : new ProductLineStore(),
+    productStore : new ProductStore(),
 }
 
 export const StoreContext = createContext(store);
