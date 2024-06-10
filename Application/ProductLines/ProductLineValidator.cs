@@ -11,7 +11,8 @@ namespace Application.ProductLines
     {
         public ProductLineValidator()
         {
-            RuleFor(x=> x.Product).NotEmpty();
+            RuleFor(x=> x.Title).NotEmpty();
+            RuleFor(x=> x.Status).NotEmpty();
         }
     }
 }

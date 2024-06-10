@@ -2,7 +2,7 @@ import { Product } from "./product";
 
 export interface ProductLine {
     id:string,
-    product : Product,
+    product? : Product,
     title : string,
     status : string,
 }

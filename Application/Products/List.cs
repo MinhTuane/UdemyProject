@@ -26,8 +26,11 @@ namespace Application.Products
 
             public async Task<Result<List<Product>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                
-                return Result<List<Product>>.Success(await _context.Products.ToListAsync());
+                var products = await _context.Products
+                    .Include(p => p.ProductionRecords)
+                    .ToListAsync(cancellationToken);
+
+                return Result<List<Product>>.Success(products);
             }
         }
     }

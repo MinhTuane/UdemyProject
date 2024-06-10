@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
@@ -11,6 +12,104 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
+            if (!context.ProductionRecords.Any())
+            {
+                var productId = new Guid("18CC8430-A992-49E4-9FBC-B83AFC7B93D2");
+                var today = DateTime.Now.Date;
+                var productionRecords = new List<ProductionRecord>
+                    {
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = new DateTime(2024, 6, 10, 8, 0, 0),
+                            QuantityProduced = 100
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = new DateTime(2024, 6, 10, 9, 0, 0),
+                            QuantityProduced = 150
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = new DateTime(2024, 6, 10, 10, 0, 0),
+                            QuantityProduced = 200
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = new DateTime(2024, 6, 10, 11, 0, 0),
+                            QuantityProduced = 120
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = new DateTime(2024, 6, 10, 12, 0, 0),
+                            QuantityProduced = 180
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = today.AddHours(8),
+                            QuantityProduced = 100
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = today.AddHours(9),
+                            QuantityProduced = 150
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = today.AddHours(10),
+                            QuantityProduced = 200
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = today.AddHours(11),
+                            QuantityProduced = 120
+                        },
+                        new ProductionRecord
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductId = productId,
+                            ProductionDate = today.AddHours(12),
+                            QuantityProduced = 180
+                        }
+                    };
+                await context.ProductionRecords.AddRangeAsync(productionRecords);
+                await context.SaveChangesAsync();
+            }
+            if (!context.Products.Any())
+            {
+                var Products = new List<Product>
+                {
+                    new Product
+                    {
+                        Name = "MotorBike",
+                        Quantity = 10000,
+                        Description ="Sport motorbike with high speed.",
+                        Materials = context.Materials.ToList(),
+                    }
+                };
+                await context.Products.AddRangeAsync(Products);
+                await context.SaveChangesAsync();
+            }
+
+
+
             if (!context.Materials.Any())
             {
                 var Materials = new List<Material>
@@ -135,10 +234,18 @@ namespace Persistence
             {
                 var productLines = new List<ProductLine>
                 {
-                    new ProductLine{IdProduct = new Guid("044bb1e2-1b54-4b4c-b995-330b08a605ff"),Status="Idle",Title="Line 1"},
-                    new ProductLine{IdProduct = new Guid("18e5f2ed-fe14-4e34-a4c2-f15c3480179e"),Status="Idle",Title="Line 2"},
-                    new ProductLine{IdProduct = new Guid("3d61d61d-680f-476d-a560-7f3eaad212bb"),Status="Idle",Title="Line 3"},
-                    new ProductLine{IdProduct = new Guid("40e1969a-247b-47ba-aa59-00dbe2d40697"),Status="Idle",Title="Line 4"},
+                    new ProductLine{Status="Idle",Title="Line 1"},
+                    new ProductLine{Status="Idle",Title="Line 2"},
+                    new ProductLine{Status="Idle",Title="Line 3"},
+                    new ProductLine{Status="Idle",Title="Line 4"},
+                    new ProductLine{Status="Idle",Title="Line 5"},
+                    new ProductLine{Status="Idle",Title="Line 6"},
+                    new ProductLine{Status="Idle",Title="Line 7"},
+                    new ProductLine{Status="Idle",Title="Line 8"},
+                    new ProductLine{Status="Idle",Title="Line 9"},
+                    new ProductLine{Status="Idle",Title="Line 10"},
+                    new ProductLine{Status="Idle",Title="Line 11"},
+                    new ProductLine{Status="Idle",Title="Line 12"},
                 };
                 await context.ProductLines.AddRangeAsync(productLines);
                 await context.SaveChangesAsync();

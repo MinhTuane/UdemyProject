@@ -7,6 +7,9 @@ import { User, UserFormValues } from "../models/user";
 import { Material } from "../models/material";
 import { ProductLine } from "../models/productLine";
 import { Product } from "../models/product";
+import { PurchaseOrder } from "../models/purchaseOrder";
+import { Company } from "../models/company";
+import { ProductionRecord } from "../models/productionRecord";
 
 
 const sleep = (delay: number) => {
@@ -93,7 +96,7 @@ const Materials = {
     list: () => request.get<Material[]>('/material'),
     details:(id:string) => request.get<Material>(`/material/${id}`),
     create: (material:Material) => axios.post<void>('/material',material),
-    update: (material:Material) => axios.post<void>(`/material/${material.id}`,material),
+    update: (material:Material) => axios.put<void>(`/material/${material.id}`,material),
     delete: (id:string) => axios.delete<void>(`/material/${id}`)
 }
 
@@ -101,16 +104,40 @@ const ProductLines = {
     list: () => request.get<ProductLine[]>('/productlines'),
     details:(id:string) => request.get<ProductLine>(`/productlines/${id}`),
     create: (productLine:ProductLine) => axios.post<void>('/productlines',productLine),
-    update: (productLine:ProductLine) => axios.post<void>(`/productlines/${productLine.id}`,productLine),
+    update: (productLine:ProductLine) => axios.put<void>(`/productlines/${productLine.id}`,productLine),
     delete: (id:string) => axios.delete<void>(`/productlines/${id}`)
 }
 
 const Products = {
-    list: () => request.get<Product[]>('/productlines'),
-    details:(id:string) => request.get<Product>(`/productlines/${id}`),
-    create: (product:Product) => axios.post<void>('/products',product),
-    update: (product:Product) => axios.post<void>(`/products/${product.id}`,product),
-    delete: (id:string) => axios.delete<void>(`/products/${id}`)
+    list: () => request.get<Product[]>('/products'),
+    details: (id: string) => request.get<Product>(`/products/${id}`),
+    create: (product: Product) => axios.post<void>('/products', product),
+    update: (product: Product) => axios.put<void>(`/products/${product.id}`, product),
+    delete: (id: string) => axios.delete<void>(`/products/${id}`),
+    productionByDay: (id: string) => request.get<ProductionRecord[]>(`/products/${id}/production/byday`),
+    productionByMonth: (id: string) => request.get<ProductionRecord[]>(`/products/${id}/production/bymonth`),
+    productionByYear: (id: string) => request.get<ProductionRecord[]>(`/products/${id}/production/byyear`)
+};
+
+
+const PurchaseOrders = {
+    list: () => request.get<PurchaseOrder[]>('/purchaseOrders'),
+    details:(id:string) => request.get<PurchaseOrder>(`/purchaseOrders/${id}`),
+    create: (purchaseOrder:PurchaseOrder) => axios.post<void>('/purchaseOrders',purchaseOrder),
+    update: (purchaseOrder:PurchaseOrder) => axios.put<void>(`/purchaseOrders/${purchaseOrder.id}`,purchaseOrder),
+    delete: (id:string) => axios.delete<void>(`/purchaseOrders/${id}`)
+}
+
+const Companies = {
+    list: () => request.get<Company[]>('/companies'),
+    details:(id:string) => request.get<Company>(`/companies/${id}`),
+    create: (company:Company) => axios.post<void>('/companies',company),
+    update: (company:Company) => axios.put<void>(`/companies/${company.id}`,company),
+    delete: (id:string) => axios.delete<void>(`/companies/${id}`)
+}
+
+const CountryNames = {
+    list : ()=> request.get<String[]>('/country'),
 }
 
 const agent = {
@@ -118,7 +145,10 @@ const agent = {
     Account,
     Materials,
     ProductLines,
-    Products
+    Products,
+    PurchaseOrders,
+    CountryNames,
+    Companies
 }
 
 export default agent;

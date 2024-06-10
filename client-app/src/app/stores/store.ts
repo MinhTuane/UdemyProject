@@ -5,6 +5,9 @@ import UserStore from "./userStore";
 import MaterialStore from "./materialStore";
 import ProductLineStore from "./productLineStore";
 import ProductStore from "./productStore";
+import { PurchaseOrderStore } from "./purchaseOrderStore";
+import CountryStore from "./countryStore";
+import CompanyStore from "./companyStore";
 
 
 interface Store {
@@ -14,6 +17,9 @@ interface Store {
     materialStore : MaterialStore;
     productLineStore : ProductLineStore;
     productStore : ProductStore;
+    purchaseOrderStore : PurchaseOrderStore;
+    countryStore : CountryStore;
+    companyStore : CompanyStore;
 }
 
 export const store : Store = {
@@ -23,6 +29,9 @@ export const store : Store = {
     materialStore : new MaterialStore(),
     productLineStore : new ProductLineStore(),
     productStore : new ProductStore(),
+    purchaseOrderStore : new PurchaseOrderStore(),
+    countryStore : new CountryStore(),
+    companyStore : new CompanyStore(),
 }
 
 export const StoreContext = createContext(store);

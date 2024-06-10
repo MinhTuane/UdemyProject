@@ -116,6 +116,26 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Company", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TaxCode")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("Domain.Material", b =>
                 {
                     b.Property<Guid>("Id")
@@ -174,13 +194,16 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("Price")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Quantity")
+                    b.Property<long?>("Quantity")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -212,6 +235,61 @@ namespace Persistence.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductLines");
+                });
+
+            modelBuilder.Entity("Domain.ProductionRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ProductionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("QuantityProduced")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductionRecords");
+                });
+
+            modelBuilder.Entity("Domain.PurchaseOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ContractDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ExportCountry")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExportDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("PurchaseOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -351,9 +429,39 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.ProductLine", b =>
                 {
-                    b.HasOne("Domain.Material", "Product")
+                    b.HasOne("Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Domain.ProductionRecord", b =>
+                {
+                    b.HasOne("Domain.Product", "Product")
+                        .WithMany("ProductionRecords")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Domain.PurchaseOrder", b =>
+                {
+                    b.HasOne("Domain.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Product", "Product")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("Product");
                 });
@@ -412,6 +520,10 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Product", b =>
                 {
                     b.Navigation("Materials");
+
+                    b.Navigation("ProductionRecords");
+
+                    b.Navigation("PurchaseOrders");
                 });
 #pragma warning restore 612, 618
         }
