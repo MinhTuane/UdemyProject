@@ -81,18 +81,7 @@ let chart1_2_options = {
   
       return {
         labels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC",
+          7,8,9,10,11,12,13,14,15,16,17,18,19
         ],
         datasets: [
           {
@@ -110,7 +99,7 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
+            data: [1123, 1111, 1032, 1022, 1122, 1098, 1034, 1113, 1145, 1198, 1102, 1255,1123],
           },
         ],
       };
@@ -126,19 +115,8 @@ let chart1_2_options = {
   
       return {
         labels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC",
-        ],
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+          ],
         datasets: [
           {
             label: "My First dataset",
@@ -155,7 +133,11 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
+            data: [
+              14432, 14211, 14078, 14567, 14322, 14489, 14256, 14512, 14398, 14476, 
+              14310, 14295, 14450, 14368, 14405, 14492, 14512, 14289, 14345, 14478, 
+              14333, 14459, 14422, 14377, 14499, 14388, 14412, 14431, 14456, 14472
+          ],
           },
         ],
       };
@@ -200,7 +182,10 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130],
+            data : [
+              446870, 402560, 446400, 431220, 445100, 431340, 446230, 446500,
+              431390, 445780, 431610, 446500
+          ],
           },
         ],
       };
@@ -239,7 +224,7 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [80, 100, 70, 80, 120, 80],
+            data: [25000, 12000, 23000, 10000, 5000, 17000],
           },
         ],
       };
@@ -339,7 +324,7 @@ let chart1_2_options = {
         labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
         datasets: [
           {
-            label: "My First dataset",
+            label: "Orders",
             fill: true,
             backgroundColor: gradientStroke,
             borderColor: "#00d6b4",
@@ -353,7 +338,7 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [90, 27, 60, 12, 80],
+            data: [1, 3, 2, 2, 2],
           },
         ],
       };

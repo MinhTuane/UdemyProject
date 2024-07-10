@@ -22,41 +22,6 @@ namespace Persistence
                         {
                             Id = Guid.NewGuid(),
                             ProductId = productId,
-                            ProductionDate = new DateTime(2024, 6, 10, 8, 0, 0),
-                            QuantityProduced = 100
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = new DateTime(2024, 6, 10, 9, 0, 0),
-                            QuantityProduced = 150
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = new DateTime(2024, 6, 10, 10, 0, 0),
-                            QuantityProduced = 200
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = new DateTime(2024, 6, 10, 11, 0, 0),
-                            QuantityProduced = 120
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = new DateTime(2024, 6, 10, 12, 0, 0),
-                            QuantityProduced = 180
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
                             ProductionDate = today.AddHours(8),
                             QuantityProduced = 100
                         },

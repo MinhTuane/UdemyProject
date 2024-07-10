@@ -20,13 +20,6 @@ function Sidebar() {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleChoosingLine = (productLine: ProductLine) => {
-    if (anchorEl) {
-      setAnchorEl(null);
-    }
-    setChoosingLine(productLine);
-  };
-
   useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1 && sidebarRef.current) {
       ps = new PerfectScrollbar(sidebarRef.current, {
@@ -40,6 +33,13 @@ function Sidebar() {
       }
     };
   }, []);
+
+  const handleChoosingLine = (productLine: ProductLine) => {
+    if (anchorEl) {
+      setAnchorEl(null);
+    }
+    setChoosingLine(productLine);
+  };
 
   const handleStatusClick = (event: React.MouseEvent<HTMLElement>, productLine: ProductLine) => {
     setAnchorEl(event.currentTarget);

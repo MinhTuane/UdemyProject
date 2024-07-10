@@ -11,7 +11,6 @@ import MaterialForm from "../../features/layout/activities/form/MaterialForm";
 import ProductForm from "../../features/layout/productLines/form/ProductForm";
 import DashBoard from "../../features/layout/productLines/Dashboard/ProductLine/DashBoard";
 import PurchaseOrderForm from "../../features/layout/PurchaseOrder/Form/PurchaseOrderForm";
-import TestData from "../../features/layout/productLines/Dashboard/ProductLine/TestData";
 
 export const routes: RouteObject[] = [
     {
@@ -25,7 +24,6 @@ export const routes: RouteObject[] = [
             {path:'manage/:id',element:<ActivityForm key='edit'/>},
             {path:'createMaterial',element:<MaterialForm key='create'/>},
             {path:'createProduct',element:<ProductForm key='create'/>},
-            {path:'testData',element:<TestData />},
             {path:'createPurchaseOrder',element:<PurchaseOrderForm key='create'/>},
             {path:'login',element:<LoginForm/>},
             {path:'errors',element:<TestErrors/>},

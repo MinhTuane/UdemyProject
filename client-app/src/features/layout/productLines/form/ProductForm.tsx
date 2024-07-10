@@ -26,7 +26,6 @@ export default observer(function ProductForm() {
         name: '',
         description: '',
         materials: null,
-        purchaseOrders:null,
     })
     const validateionSchema = Yup.object({
         name: Yup.string().required('The Product name is required'),
@@ -73,8 +72,10 @@ export default observer(function ProductForm() {
                             <MaterialListItem
                             key={material.id}
                             material={material}
-                            handleAddMaterial={() => handleAddMaterial}
-                            handleRemoveMaterial={() => handleRemoveMaterial}
+                            handleAddMaterial={handleAddMaterial}
+                            handleRemoveMaterial={handleRemoveMaterial}
+                            contentButton="Delete"
+                            colorButton= {false}
                         />
                         ))}
                         <Button
@@ -90,6 +91,8 @@ export default observer(function ProductForm() {
                                     material={material}
                                     handleAddMaterial={handleAddMaterial}
                                     handleRemoveMaterial={() => handleRemoveMaterial}
+                                    contentButton="Add"
+                                    colorButton={true}
                                 />
                             ))
                         }

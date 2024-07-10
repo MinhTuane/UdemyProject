@@ -10,9 +10,11 @@ import { ErrorMessage, Formik } from "formik";
 import { Button, Form, Label } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";
+import { router } from "../../app/router/route";
 
 export default observer(function HomePage() {
   const { userStore } = useStore();
+  if(userStore.isLoggedIn)  router.navigate('/productLineDashBoard')
   return (
     <MDBContainer className="my-5 gradient-form  h-100 w-100 xxl">
 

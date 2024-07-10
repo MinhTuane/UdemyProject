@@ -3,7 +3,7 @@ import { ServerError } from "../models/serverError";
 
 export default class CommonStore {
     error :ServerError | null | undefined = null
-    token:string | null = null
+    token:string | null | undefined = null
     appLoaded = false;
     
     /**

@@ -6,23 +6,22 @@ import { Input } from "reactstrap";
 interface Props {
     material: Material,
     handleAddMaterial: (material: Material) => void,
-    handleRemoveMaterial: (id: string) => void,
+    handleRemoveMaterial: (material : Material) => void,
+    contentButton : string,
+    colorButton : boolean,
 }
 
-export default function MaterialListItem({ material, handleAddMaterial, handleRemoveMaterial }: Props) {
+export default function MaterialListItem({ material, handleAddMaterial, handleRemoveMaterial,contentButton ,colorButton}: Props) {
     const [isAdded, setIsAdded] = useState(false);
-    const [contentButton, setContentButotn] = useState('Add');
     const [quantity,setQuantity] = useState(null);
     const [weight,setWeight] =useState(null);
 
     const handleAdd = () => {
         handleAddMaterial(material)
-        setContentButotn("Delete")
         setIsAdded(!isAdded)
     }
     const handleRemove=()=> {
-        handleRemoveMaterial(material.id)
-        setContentButotn("Add")
+        handleRemoveMaterial(material)
         setIsAdded(!isAdded)
     }
 
@@ -50,8 +49,8 @@ export default function MaterialListItem({ material, handleAddMaterial, handleRe
 
                     <Button
                         floated="right"
-                        color={isAdded ? 'red' : 'green'}
-                        onClick={isAdded ? handleRemove : handleAdd}
+                        color={colorButton ? "green" : "red"}
+                        onClick={colorButton ? handleAdd : handleRemove}
                         content={contentButton}
                     />
 

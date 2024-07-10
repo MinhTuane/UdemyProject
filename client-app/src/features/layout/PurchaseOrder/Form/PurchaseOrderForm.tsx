@@ -51,9 +51,6 @@ export default observer(function PurchaseOrderForm() {
 
     const { id } = useParams();
 
-    useEffect(() => {
-        if (id) loadPurchaseOrder(id).then(purchase => setPurchaseOrder(purchase!))
-    })
 
     function handleFormSubmit(purchaseOrder: PurchaseOrder) {
         
