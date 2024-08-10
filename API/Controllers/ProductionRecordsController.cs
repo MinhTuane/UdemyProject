@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class ProductionRecordsController : BaseApiController
     {
         [HttpGet]
@@ -37,9 +38,30 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMaterial(Guid id)
+        public async Task<IActionResult> DeleteProductionRecord(Guid id)
         {
            return HandleResult( await Mediator.Send(new Delete.Command{Id=id}));
+        }
+
+        [Authorize]
+        [HttpGet("year:{id}")]
+        public async Task<IActionResult> GetProductByYear(Guid id,DateTime Date) 
+        {
+            return HandleResult(await Mediator.Send(new GetProductEachMonth.Query{ProductId = id,Date = Date}));
+        }
+
+        [Authorize]
+        [HttpGet("month:{id}")]
+        public async Task<IActionResult> GetProductByMonth(Guid id,DateTime Date) 
+        {
+            return HandleResult(await Mediator.Send(new GetProductEachDay.Query{ProductId = id,Date = Date}));
+        }
+
+        [Authorize]
+        [HttpGet("day:{id}")]
+        public async Task<IActionResult> GetProductByDay(Guid id,DateTime Date) 
+        {
+            return HandleResult(await Mediator.Send(new GetProductEachHour.Query{ProductId = id,Date = Date}));
         }
     }
 }

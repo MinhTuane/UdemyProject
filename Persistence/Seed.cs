@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Enum;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,53 +11,53 @@ namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager,RoleManager<IdentityRole> roleManager)
         {
-            if (!context.ProductionRecords.Any())
-            {
-                var productId = new Guid("18CC8430-A992-49E4-9FBC-B83AFC7B93D2");
-                var today = DateTime.Now.Date;
-                var productionRecords = new List<ProductionRecord>
-                    {
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = today.AddHours(8),
-                            QuantityProduced = 100
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = today.AddHours(9),
-                            QuantityProduced = 150
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = today.AddHours(10),
-                            QuantityProduced = 200
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = today.AddHours(11),
-                            QuantityProduced = 120
-                        },
-                        new ProductionRecord
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductId = productId,
-                            ProductionDate = today.AddHours(12),
-                            QuantityProduced = 180
-                        }
-                    };
-                await context.ProductionRecords.AddRangeAsync(productionRecords);
-                await context.SaveChangesAsync();
-            }
+            // if (!context.ProductionRecords.Any())
+            // {
+            //     var productId = new Guid("18CC8430-A992-49E4-9FBC-B83AFC7B93D2");
+            //     var today = DateTime.Now.Date;
+            //     var productionRecords = new List<ProductionRecord>
+            //         {
+            //             new ProductionRecord
+            //             {
+            //                 Id = Guid.NewGuid(),
+            //                 ProductId = productId,
+            //                 ProductionDate = today.AddHours(8),
+            //                 QuantityProduced = 100
+            //             },
+            //             new ProductionRecord
+            //             {
+            //                 Id = Guid.NewGuid(),
+            //                 ProductId = productId,
+            //                 ProductionDate = today.AddHours(9),
+            //                 QuantityProduced = 150
+            //             },
+            //             new ProductionRecord
+            //             {
+            //                 Id = Guid.NewGuid(),
+            //                 ProductId = productId,
+            //                 ProductionDate = today.AddHours(10),
+            //                 QuantityProduced = 200
+            //             },
+            //             new ProductionRecord
+            //             {
+            //                 Id = Guid.NewGuid(),
+            //                 ProductId = productId,
+            //                 ProductionDate = today.AddHours(11),
+            //                 QuantityProduced = 120
+            //             },
+            //             new ProductionRecord
+            //             {
+            //                 Id = Guid.NewGuid(),
+            //                 ProductId = productId,
+            //                 ProductionDate = today.AddHours(12),
+            //                 QuantityProduced = 180
+            //             }
+            //         };
+            //     await context.ProductionRecords.AddRangeAsync(productionRecords);
+            //     await context.SaveChangesAsync();
+            // }
             if (!context.Products.Any())
             {
                 var Products = new List<Product>
@@ -215,20 +216,35 @@ namespace Persistence
                 await context.ProductLines.AddRangeAsync(productLines);
                 await context.SaveChangesAsync();
             }
-
+            foreach (UserRole role in Enum.GetValues(typeof(UserRole)))
+            {
+                string roleName = role.ToString();
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
             if (!userManager.Users.Any())
             {
                 var users = new List<AppUser>
                 {
-                    new AppUser{DisplayName = "Tuan", UserName = "Tuan", Email = "tuan@test.com"},
-                    new AppUser{DisplayName = "Tom", UserName = "Tom", Email = "tom@test.com"},
-                    new AppUser{DisplayName = "Jane", UserName = "jane", Email = "jane@test.com"},
-                    new AppUser{DisplayName = "Bob", UserName = "bob", Email = "bob@test.com"},
+                    new AppUser{DisplayName = "Tuan", UserName = "Tuan", Email = "tuan@test.com",DateOfBirth=new DateOnly(2000,04,28)},
+                    new AppUser{DisplayName = "Tom", UserName = "Tom", Email = "tom@test.com",DateOfBirth=new DateOnly(2000,04,28)},
+                    new AppUser{DisplayName = "Jane", UserName = "jane", Email = "jane@test.com",DateOfBirth=new DateOnly(2000,04,28)},
+                    new AppUser{DisplayName = "Bob", UserName = "bob", Email = "bob@test.com",DateOfBirth=new DateOnly(2000,04,28)},
                 };
 
                 foreach (var user in users)
                 {
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                     await userManager.CreateAsync(user, "Pa$$w0rd");
+                    if (user.UserName == "Tuan")
+                    {
+                        await userManager.AddToRoleAsync(user, UserRole.Admin.ToString());
+                    }
+                    else
+                    {
+                        await userManager.AddToRoleAsync(user, UserRole.Staff.ToString());
+                    }
                 }
             }
 

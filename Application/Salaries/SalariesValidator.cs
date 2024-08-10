@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Domain;
 using FluentValidation;
 
-namespace Application.Schedules
+namespace Application.Salaries
 {
-    public class ScheduleValidator : AbstractValidator<Schedule>
+    public class SalariesValidator : AbstractValidator<Salary>
     {
-        public ScheduleValidator()
+        public SalariesValidator()
         {
-            
+         
         }
     }
 }

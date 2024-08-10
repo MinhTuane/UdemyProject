@@ -1,46 +1,43 @@
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Application.Core;
-using Domain;
-using FluentValidation;
 using MediatR;
 using Persistence;
+
 namespace Application.Schedules
 {
-    public class Create
+    public class Delete
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Schedule Schedule { get; set; }
-        }
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-            }
+            public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command,Result<Unit>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
-                _context = context;
-
+            _context = context;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-               /*  _context.Products.Add(request.Schedule); */
+                var attendenceCheck = await _context.AttendenceChecks.FindAsync(request.Id);
+
+                if(attendenceCheck== null) return null;
+
+                _context.Remove(attendenceCheck);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to create product");
+                if(!result) return Result<Unit>.Failure("Falure to delete Product");
 
                 return Result<Unit>.Success(Unit.Value);
 
             }
         }
     }
-
-
 }

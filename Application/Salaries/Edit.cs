@@ -6,20 +6,19 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-namespace Application.Schedules
+namespace Application.Salaries
 {
     public class Edit
     {
         public class Command : IRequest<Result<Unit>> 
         {
-            public Schedule Schedule { get; set; }
+            public Salary Salary { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x=> x.Schedule).SetValidator(new ScheduleValidator());
             }
         }
 
@@ -36,7 +35,15 @@ namespace Application.Schedules
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                
+                var Salary = await _context.Salaries.FindAsync(request.Salary.Id);
+
+                if(Salary ==null) return null;
+
+                _mapper.Map(request.Salary,Salary);
+
+                var result =await _context.SaveChangesAsync()>0;
+
+                if(!result) return Result<Unit>.Failure("Failed to update Salary");
 
                 return Result<Unit>.Success(Unit.Value);
             }

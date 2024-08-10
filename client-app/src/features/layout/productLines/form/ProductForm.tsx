@@ -9,23 +9,25 @@ import { useStore } from "../../../../app/stores/store";
 import MaterialListItem from "../../activities/dashboard/Material/MaterialListItem";
 import { Material } from "../../../../app/models/material";
 import { observer } from 'mobx-react-lite'
-import { PurchaseOrder } from "../../../../app/models/purchaseOrder";
+import {v4 as uuid} from 'uuid';
+import { router } from "../../../../app/router/route";
 
 
 export default observer(function ProductForm() {
     const [adding, setAdding] = useState(false);
-    const { materialStore } = useStore();
+    const { materialStore ,productStore} = useStore();
 
     const [choseMaterial,setChoseMaterial] = useState<Material[]>([]);
 
     const { materials, loadMaterials } = materialStore;
-    const [isAdding, setIsAdding] = useState(false);
+
+    const {createProduct,updateProduct} = productStore;
 
     const [product, setProduct] = useState<Product>({
         id:"",
         name: '',
         description: '',
-        materials: null,
+        choseMaterials: null,
     })
     const validateionSchema = Yup.object({
         name: Yup.string().required('The Product name is required'),
@@ -37,21 +39,29 @@ export default observer(function ProductForm() {
     }, [])
 
     function handleFormSubmit(product: Product) {
-
+        product = {
+            ...product,
+            choseMaterials : choseMaterial
+        }
+        if(product.id.length ==0) {
+            let newProduct ={
+                ...product,
+                id : uuid(),
+            };
+            createProduct(newProduct).then(()=> router.navigate(`/products/${newProduct.id}`))
+        } else {
+            updateProduct(product).then(()=> router.navigate(`/products/${product.id}`))
+        }
     }
 
     function handleAddMaterial(material: Material) {
-        setIsAdding(true);
         setChoseMaterial([...choseMaterial, material])
         materials.delete(material.id);
-        setIsAdding(false);
     }
 
     function handleRemoveMaterial(material:Material) {
-        setIsAdding(true)
         materials.set(material.id,material);
         setChoseMaterial(choseMaterial.filter(x => x.id != material.id));
-        setIsAdding(false)
     }
 
     return (
@@ -80,6 +90,7 @@ export default observer(function ProductForm() {
                         ))}
                         <Button
                             color="teal"
+                            type="button"
                             onClick={() => setAdding(!adding)}
                             content='Add Materials'
                         />

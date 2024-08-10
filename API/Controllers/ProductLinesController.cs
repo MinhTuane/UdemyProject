@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Application.ProductLines;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -16,8 +13,6 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
-
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductLine(Guid id) 
         {

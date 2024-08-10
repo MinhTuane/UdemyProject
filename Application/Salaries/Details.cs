@@ -7,16 +7,16 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Schedules
+namespace Application.Salaries
 {
     public class Details
     {
-        public class Query : IRequest<Result<Schedule>>
+        public class Query : IRequest<Result<Salary>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query,Result<Schedule>>
+        public class Handler : IRequestHandler<Query,Result<Salary>>
         {
         private readonly DataContext _context;
             public Handler(DataContext context)
@@ -25,10 +25,10 @@ namespace Application.Schedules
                 
             }
 
-            public async Task<Result<Schedule>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Salary>> Handle(Query request, CancellationToken cancellationToken)
             {
-                
-                return null;
+                var Salary = await _context.Salaries.FindAsync(request.Id);
+                return Result<Salary>.Success(Salary);
             }
         }
     }

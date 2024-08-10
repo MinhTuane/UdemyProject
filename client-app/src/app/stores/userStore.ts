@@ -7,9 +7,6 @@ import { router } from "../router/route";
 export default class UserStore {
     user : User | null = null;
 
-    /**
-     *
-     */
     constructor() {
         makeAutoObservable(this)
         

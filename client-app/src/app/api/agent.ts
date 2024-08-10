@@ -10,6 +10,7 @@ import { Product } from "../models/product";
 import { PurchaseOrder } from "../models/purchaseOrder";
 import { Company } from "../models/company";
 import { ProductionRecord } from "../models/productionRecord";
+import {  ProductData } from "../models/productData";
 
 
 const sleep = (delay: number) => {
@@ -114,9 +115,6 @@ const Products = {
     create: (product: Product) => axios.post<void>('/products', product),
     update: (product: Product) => axios.put<void>(`/products/${product.id}`, product),
     delete: (id: string) => axios.delete<void>(`/products/${id}`),
-    productionByDay: (id: string) => request.get<ProductionRecord[]>(`/products/${id}/production/byday`),
-    productionByMonth: (id: string) => request.get<ProductionRecord[]>(`/products/${id}/production/bymonth`),
-    productionByYear: (id: string) => request.get<ProductionRecord[]>(`/products/${id}/production/byyear`)
 };
 
 
@@ -136,6 +134,17 @@ const Companies = {
     delete: (id:string) => axios.delete<void>(`/companies/${id}`)
 }
 
+const ProductionRecords = {
+    list: () => request.get<ProductionRecord[]>('/productionRecords'),
+    details:(id:string) => request.get<ProductionRecord>(`/productionRecords/${id}`),
+    create: (productionRecord:ProductionRecord) => axios.post<void>('/productionRecords',productionRecord),
+    update: (productionRecord:ProductionRecord) => axios.put<void>(`/productionRecords/${productionRecord.id}`,productionRecord),
+    delete: (id:string) => axios.delete<void>(`/productionRecords/${id}`),
+    year:(productdata:ProductData) => request.get<ProductionRecord>(`/productionRecords/year:${productdata.productId}`),
+    month:(productdata:ProductData) => request.get<ProductionRecord>(`/productionRecords/month:${productdata.productId}`),
+    day:(productdata:ProductData) => request.get<ProductionRecord>(`/productionRecords/day:${productdata.productId}`)
+}
+
 const CountryNames = {
     list : ()=> request.get<String[]>('/country'),
 }
@@ -148,7 +157,8 @@ const agent = {
     Products,
     PurchaseOrders,
     CountryNames,
-    Companies
+    Companies,
+    ProductionRecords
 }
 
 export default agent;

@@ -1,12 +1,11 @@
 using Application.Products;
 using Domain;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class ProductsController :BaseApiController
+    public class ProductsController : BaseApiController
     {
         [HttpGet]
         public async Task<IActionResult> GetProductLines() 

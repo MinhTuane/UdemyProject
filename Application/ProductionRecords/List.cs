@@ -8,7 +8,10 @@ namespace Application.ProductionRecords
 {
     public class List
     {
-        public class Query : IRequest<Result<List<ProductionRecord>>> { }
+        public class Query : IRequest<Result<List<ProductionRecord>>> 
+        {
+            public Guid ProductId { get; set; }
+        }
 
         public class Handler : IRequestHandler<Query, Result<List<ProductionRecord>>>
         {
@@ -22,7 +25,8 @@ namespace Application.ProductionRecords
             public async Task<Result<List<ProductionRecord>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 
-                return Result<List<ProductionRecord>>.Success(await _context.ProductionRecords.ToListAsync());
+                return Result<List<ProductionRecord>>
+                .Success(await _context.ProductionRecords.Where(x=> x.ProductId == request.ProductId).ToListAsync());
             }
         }
     }

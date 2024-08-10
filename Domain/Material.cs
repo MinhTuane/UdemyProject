@@ -15,6 +15,7 @@ namespace Domain
         public DateTime Date {get; set;}
         public string Country { get; set; }
         public string Factory { get; set; }
-        public DateTime ManufactoringDate { get; set; }
+        public bool IsManufactoring { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

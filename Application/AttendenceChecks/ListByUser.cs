@@ -13,9 +13,12 @@ namespace Application.Schedules
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Schedule>>> { }
+        public class Query : IRequest<Result<List<AttendenceCheck>>> 
+        {
+            public string UserId { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<List<Schedule>>>
+        public class Handler : IRequestHandler<Query, Result<List<AttendenceCheck>>>
         {
             private readonly DataContext _context;
             
@@ -24,10 +27,10 @@ namespace Application.Schedules
                 _context = context;
             }
 
-            public async Task<Result<List<Schedule>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<AttendenceCheck>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 
-                return null;
+                return Result<List<AttendenceCheck>>.Success(await _context.AttendenceChecks.Where(x=> x.UserId == request.UserId).ToListAsync());
             }
         }
     }

@@ -114,49 +114,4 @@ export default class ProductStore {
             }
         }
     }
-    
-    get ProductionByDate() {
-        if (!this.selectedProduct || !this.selectedProduct.productionRecords) {
-            return new Map(); // Return an empty map or handle null/undefined case
-        }
-
-        // Calculate production by date
-        const productionByDate = this.selectedProduct.productionRecords.reduce((accumulator, record) => {
-            const dateKey = new Date(record.date).getDate();
-            if (!accumulator.has(dateKey)) {
-                accumulator.set(dateKey, 0);
-            }
-            accumulator.set(dateKey, accumulator.get(dateKey)! + record.quantityProduced);
-            return accumulator;
-        }, new Map<number, number>());
-
-        return productionByDate;
-    }
-
-    get ProductionByHourToday() {
-        if (!this.selectedProduct || !this.selectedProduct.productionRecords) {
-            return []; 
-        }
-    
-        const today = new Date();
-        const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
-        const todayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime();
-    
-        // Filter production records to include only those from today
-        const todayRecords = this.selectedProduct.productionRecords.filter(record => {
-            const recordDate = new Date(record.date).getTime();
-            return recordDate >= todayStart && recordDate < todayEnd;
-        });
-    
-        // Calculate production by hour for today
-        const productionByHourToday = Object.entries(
-            todayRecords.reduce((accumulator, record) => {
-                const hour = new Date(record.date).getHours();
-                accumulator[hour] = accumulator[hour] ? accumulator[hour] + record.quantityProduced : record.quantityProduced;
-                return accumulator;
-            }, {} as {[key : number]:number})
-        );
-    
-        return productionByHourToday;
-    }
 }

@@ -1,6 +1,7 @@
-import { Material } from "./material";
+
 import { PurchaseOrder } from "./purchaseOrder";
 import { ProductionRecord } from "./productionRecord"; 
+import { Material } from "./material";
 
 export interface Product {
     id: string;
@@ -9,7 +10,7 @@ export interface Product {
     description: string;
     image?: any;
     price?: number;
-    materials: Material[] | null;
+    choseMaterials: Material[] | null;
     purchaseOrders?: PurchaseOrder[] | null;
     productionRecords?: ProductionRecord[] | null; 
 }
