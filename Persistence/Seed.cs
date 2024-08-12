@@ -58,21 +58,21 @@ namespace Persistence
             //     await context.ProductionRecords.AddRangeAsync(productionRecords);
             //     await context.SaveChangesAsync();
             // }
-            if (!context.Products.Any())
-            {
-                var Products = new List<Product>
-                {
-                    new Product
-                    {
-                        Name = "MotorBike",
-                        Quantity = 10000,
-                        Description ="Sport motorbike with high speed.",
-                        Materials = context.Materials.ToList(),
-                    }
-                };
-                await context.Products.AddRangeAsync(Products);
-                await context.SaveChangesAsync();
-            }
+            // if (!context.Products.Any())
+            // {
+            //     var Products = new List<Product>
+            //     {
+            //         new Product
+            //         {
+            //             Name = "MotorBike",
+            //             Quantity = 10000,
+            //             Description ="Sport motorbike with high speed.",
+            //             Materials = context.Materials.ToList(),
+            //         }
+            //     };
+            //     await context.Products.AddRangeAsync(Products);
+            //     await context.SaveChangesAsync();
+            // }
 
 
 

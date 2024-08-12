@@ -14,8 +14,9 @@ import ProductLineListItem from "./ListItem";
 let ps: PerfectScrollbar | null = null;
 
 function Sidebar() {
-  const { productLineStore } = useStore();
+  const { productLineStore ,productStore} = useStore();
   const { groupedLineStatus, productLines, loadingInitial, choosingLine, setChoosingLine,getStatusColor,mapToSemanticColor,updateProductLine } = productLineStore;
+  const {updateProduct,getProduct,loadProducts,products} = productStore;
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,6 +34,12 @@ function Sidebar() {
       }
     };
   }, []);
+
+  useEffect(()=> {
+    if(products.size <=1) {
+      loadProducts
+    }
+  },[products,loadProducts])
 
   const handleChoosingLine = (productLine: ProductLine) => {
     if (anchorEl) {
@@ -52,12 +59,23 @@ function Sidebar() {
   };
 
   const handleStatusChange = (newStatus: string) => {
-    if (choosingLine) {
-      choosingLine.status = newStatus;
-      productLines.set(choosingLine.id, choosingLine);
-      setAnchorEl(null);
-      updateProductLine(choosingLine).then(()=> console.log("Success")).catch(error=> console.log(error));
-            
+    if(choosingLine!.status!='Idle') {
+      if (choosingLine) {
+        choosingLine.status = newStatus;
+        if(newStatus === 'Idle') {       
+          var product = getProduct(choosingLine.productId!);
+          choosingLine.productId =undefined;
+          product ={
+            ...product!,
+            isProducing : false
+          }
+          updateProduct(product);
+        }
+        productLines.set(choosingLine.id, choosingLine);
+        setAnchorEl(null);
+        updateProductLine(choosingLine).then(()=> console.log("Success")).catch(error=> console.log(error));
+              
+      }
     }
   };
 

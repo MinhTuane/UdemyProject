@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useStore } from "../../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
-import { Activity } from "../../../../app/models/activity";
 import LoadingComponent from "../../../../app/layout/loadingComponent";
 import { v4 as uuid } from 'uuid';
 import { Formik } from "formik";
@@ -14,27 +13,28 @@ import MySelectInput from "../../../../app/common/form/MySelectInput";
 import MyDateInput from "../../../../app/common/form/MyDateInput";
 import { router } from "../../../../app/router/route";
 import { materialOptions } from "../../../../app/common/options/materialOptions";
+import { Material } from "../../../../app/models/material";
 
 export default observer(function MaterialForm() {
 
-    const { activityStore } = useStore();
-    const { createActivity, updateActivity, loading,
-        loadActivity, loadingInitial } = activityStore;
+    const {materialStore } = useStore();
+    const { createMaterial, updateMaterial,loading,
+        loadMaterial, loadingInitial } = materialStore;
     
     const { id } = useParams();
 
-    const [activity, setActivity] = useState<Activity>({
+    const [material, setMaterial] = useState<Material>({
         id: '',
-        title: '',
-        category: '',
+        name: '',
+        price: 0,
         description: '',
-        date: new Date(),
-        city: '',
-        venue: ''
+        date: new Date() ,
+        country: '',
+        factory: '',
     })
     useEffect(() => {
-        if (id) loadActivity(id).then(activity => setActivity(activity!))
-    }, [id, loadActivity])
+        if (id) loadMaterial(id).then(material => setMaterial(material!))
+    }, [id, loadMaterial])
 
     const validationChema = Yup.object({
         name: Yup.string().required('The material name is required'),
@@ -46,16 +46,16 @@ export default observer(function MaterialForm() {
         price: Yup.string().required(' Price is required'),
     })
 
-    function handleFormSubmit(activity: Activity) {
-        if (activity.id.length === 0) {
-            let newActivity = {
-                ...activity,
+    function handleFormSubmit(material: Material) {
+        if (material.id.length === 0) {
+            let newMaterial = {
+                ...material,
                 id: uuid()
             };
-            createActivity(newActivity).then(() => router.navigate(`/activities/${newActivity.id}`)
+            createMaterial(newMaterial).then(() => router.navigate(`/materials/${newMaterial.id}`)
             )
         } else {
-            updateActivity(activity).then(()=>router.navigate(`/activities/${activity.id}`))
+            updateMaterial(material).then(()=>router.navigate(`/materials/${material.id}`))
         }
     }
 
@@ -67,7 +67,7 @@ export default observer(function MaterialForm() {
                 <Formik
                     validationSchema={validationChema}
                     enableReinitialize
-                    initialValues={activity}
+                    initialValues={material}
                     onSubmit={values => handleFormSubmit(values)}>
                     {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                         <Form onSubmit={handleSubmit} autoComplete='off'>

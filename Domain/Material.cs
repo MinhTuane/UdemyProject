@@ -16,6 +16,6 @@ namespace Domain
         public string Country { get; set; }
         public string Factory { get; set; }
         public bool IsManufactoring { get; set; }
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<MaterialProduct> MaterialProducts { get; set; }
     }
 }

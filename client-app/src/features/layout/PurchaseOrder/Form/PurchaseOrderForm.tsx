@@ -11,18 +11,20 @@ import MyDateInput from "../../../../app/common/form/MyDateInput";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { router } from "../../../../app/router/route";
+import {v4 as uuid} from 'uuid';
 
 export default observer(function PurchaseOrderForm() {
 
     const { purchaseOrderStore, productStore, countryStore,companyStore } = useStore();
     const { loadPurchaseOrder, createPurchaseOrder, updatePurchaseOrder,loading } = purchaseOrderStore;
-    const { loadProducts, productOptions, products } = productStore;
+    const { loadProducts, productOptions, products,getProduct,updateProduct } = productStore;
     const { loadCountryNames, countryNames, countryOptions } = countryStore;
-    const {companyOptions} = companyStore;
+    const {companyOptions,companies,loadCompanies} = companyStore;
 
     useEffect(() => {
         if (products.size <= 1) loadProducts();
-    }, [productStore, products.size])
+        if(companies.size <1) loadCompanies();
+    }, [productStore, products.size,companies,loadCompanies])
 
     useEffect(() => {
         if (countryNames.length <= 1) loadCountryNames()
@@ -37,7 +39,8 @@ export default observer(function PurchaseOrderForm() {
         exportCountry: 'Vietnam',
         exportDate: null,
         productId: "",
-        quantity: 0
+        quantity: 0,
+        isDelivered : false
     })
 
     const validationChema = Yup.object({
@@ -52,15 +55,38 @@ export default observer(function PurchaseOrderForm() {
     const { id } = useParams();
 
 
-    function handleFormSubmit(purchaseOrder: PurchaseOrder) {
-        
-
+    async function handleFormSubmit (purchaseOrder: PurchaseOrder) {
         if (purchaseOrder.id.length === 0) {
-            createPurchaseOrder(purchaseOrder).then(()=> router.navigate('/productLineDashBoard'));
+            var newPurchaseOrder = {
+                ...purchaseOrder,
+                id : uuid(),
+                isDelivered : false
+            }
+            createPurchaseOrder(newPurchaseOrder).then(()=> {
+                hanldeUpdateProduct(newPurchaseOrder.productId,newPurchaseOrder.quantity,0);
+                router.navigate('/productLineDashBoard')
+        });
+                
         } else {
-            updatePurchaseOrder(purchaseOrder).then(()=> router.navigate('/productLineDashBoard'));
+            var purchaseOd =  await loadPurchaseOrder(purchaseOrder.id);
+            updatePurchaseOrder(purchaseOrder).then(()=> {
+                hanldeUpdateProduct(purchaseOrder.productId,purchaseOrder.quantity,purchaseOd!.quantity);
+                router.navigate('/productLineDashBoard')
+            }
+            );
         }
         
+    }
+
+    function hanldeUpdateProduct(id : string,newQuantity:number, preNumber : number) {
+        var product = getProduct(id);
+        if(product) {
+            product = {
+                ...product,
+                quantity: product.quantity + newQuantity - preNumber
+            }
+            updateProduct(product);
+        }    
     }
 
     return (

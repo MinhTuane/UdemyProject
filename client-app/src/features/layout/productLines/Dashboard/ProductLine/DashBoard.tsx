@@ -18,7 +18,7 @@ export default observer(function DashBoard() {
   const{productLineStore} = useStore();
   const {loadProductLines,productLines,choosingLine} = productLineStore;
   useEffect(()=>{
-    if(productLines.size <=1){
+    if(productLines.size <1){
         loadProductLines()
     }
   },[productLines.size,productLineStore])

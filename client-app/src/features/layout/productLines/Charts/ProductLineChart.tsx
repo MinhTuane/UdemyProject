@@ -1,25 +1,5 @@
-/*!
+import { ChartData } from "../../../../app/models/chartdata";
 
-=========================================================
-* Black Dashboard React v1.2.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-// ##############################
-// // // Chart variables
-// #############################
-
-// chartExample1 and chartExample2 options
 let chart1_2_options = {
     maintainAspectRatio: false,
     legend: {
@@ -69,8 +49,8 @@ let chart1_2_options = {
   // #########################################
   // // // used inside src/views/Dashboard.js
   // #########################################
-  let chartExample1:{[key:string]:any} = {
-    data1: (canvas:any) => {
+  let chartExample1 = {
+    data: (canvas : any,data : ChartData) => {
       let ctx = canvas.getContext("2d");
   
       let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
@@ -80,9 +60,7 @@ let chart1_2_options = {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
   
       return {
-        labels: [
-          7,8,9,10,11,12,13,14,15,16,17,18,19
-        ],
+        labels: data.labels,
         datasets: [
           {
             label: "My First dataset",
@@ -99,93 +77,7 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [1123, 1111, 1032, 1022, 1122, 1098, 1034, 1113, 1145, 1198, 1102, 1255,1123],
-          },
-        ],
-      };
-    },
-    data2: (canvas:any) => {
-      let ctx = canvas.getContext("2d");
-  
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-  
-      gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-      gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-      gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
-  
-      return {
-        labels: [
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
-          ],
-        datasets: [
-          {
-            label: "My First dataset",
-            fill: true,
-            backgroundColor: gradientStroke,
-            borderColor: "#1f8ef1",
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: "#1f8ef1",
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: "#1f8ef1",
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: [
-              14432, 14211, 14078, 14567, 14322, 14489, 14256, 14512, 14398, 14476, 
-              14310, 14295, 14450, 14368, 14405, 14492, 14512, 14289, 14345, 14478, 
-              14333, 14459, 14422, 14377, 14499, 14388, 14412, 14431, 14456, 14472
-          ],
-          },
-        ],
-      };
-    },
-    data3: (canvas:any) => {
-      let ctx = canvas.getContext("2d");
-  
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-  
-      gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-      gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-      gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
-  
-      return {
-        labels: [
-          "JAN",
-          "FEB",
-          "MAR",
-          "APR",
-          "MAY",
-          "JUN",
-          "JUL",
-          "AUG",
-          "SEP",
-          "OCT",
-          "NOV",
-          "DEC",
-        ],
-        datasets: [
-          {
-            label: "My First dataset",
-            fill: true,
-            backgroundColor: gradientStroke,
-            borderColor: "#1f8ef1",
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: "#1f8ef1",
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: "#1f8ef1",
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data : [
-              446870, 402560, 446400, 431220, 445100, 431340, 446230, 446500,
-              431390, 445780, 431610, 446500
-          ],
+            data: data.data,
           },
         ],
       };

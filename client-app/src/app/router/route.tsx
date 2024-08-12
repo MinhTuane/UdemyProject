@@ -11,6 +11,8 @@ import MaterialForm from "../../features/layout/activities/form/MaterialForm";
 import ProductForm from "../../features/layout/productLines/form/ProductForm";
 import DashBoard from "../../features/layout/productLines/Dashboard/ProductLine/DashBoard";
 import PurchaseOrderForm from "../../features/layout/PurchaseOrder/Form/PurchaseOrderForm";
+import AddProduct from "../../features/layout/ProductionForm/AddProduct";
+import CompanyForm from "../../features/layout/Companies/form/CompanyForm";
 
 export const routes: RouteObject[] = [
     {
@@ -21,6 +23,8 @@ export const routes: RouteObject[] = [
             {path:'activities/:id',element:<ActivityDetails/>},
             {path:'productLineDashBoard',element:<DashBoard/>},
             {path:'createActivity',element:<ActivityForm key='create'/>},
+            {path:'addProduct',element:<AddProduct/>},
+            {path:'createCompany',element:<CompanyForm/>},
             {path:'manage/:id',element:<ActivityForm key='edit'/>},
             {path:'createMaterial',element:<MaterialForm key='create'/>},
             {path:'createProduct',element:<ProductForm key='create'/>},

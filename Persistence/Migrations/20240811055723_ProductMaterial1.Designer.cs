@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240811055723_ProductMaterial1")]
+    partial class ProductMaterial1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,6 +202,9 @@ namespace Persistence.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<Guid?>("ProductionRecordId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
@@ -212,6 +218,8 @@ namespace Persistence.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductionRecordId");
 
                     b.ToTable("Materials");
                 });
@@ -242,9 +250,6 @@ namespace Persistence.Migrations
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<bool>("IsProducing")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -292,8 +297,8 @@ namespace Persistence.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ProductStatus")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProductStatus")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ProductionDateTime")
                         .HasColumnType("datetime2");
@@ -322,9 +327,6 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("ExportDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDelivered")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -517,6 +519,13 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Material", b =>
+                {
+                    b.HasOne("Domain.ProductionRecord", null)
+                        .WithMany("FaultyMaterials")
+                        .HasForeignKey("ProductionRecordId");
+                });
+
             modelBuilder.Entity("Domain.MaterialProduct", b =>
                 {
                     b.HasOne("Domain.Material", "Material")
@@ -647,6 +656,11 @@ namespace Persistence.Migrations
                     b.Navigation("ProductionRecords");
 
                     b.Navigation("PurchaseOrders");
+                });
+
+            modelBuilder.Entity("Domain.ProductionRecord", b =>
+                {
+                    b.Navigation("FaultyMaterials");
                 });
 #pragma warning restore 612, 618
         }

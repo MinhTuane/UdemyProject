@@ -14,7 +14,7 @@ export default class ProductLineStore {
 
     loadingInitial = false;
     productLines = new Map<string, ProductLine>();
-    choosingLine: ProductLine | null = null;
+    choosingLine: ProductLine | undefined = undefined;
 
 
 

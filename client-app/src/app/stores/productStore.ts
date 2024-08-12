@@ -19,6 +19,18 @@ export default class ProductStore {
         return options
     }
 
+    get producingProductOptions() {
+        const options = Array.from(this.products.values()).filter(p=>p.isProducing == true).map(product => ({
+            text: `${product.name} - ${product.description}`,
+            value: product.id
+        }))
+        return options
+    }
+
+    get ProductProduce() {
+        return Array.from(this.products.values()).filter(product => product.quantity > 0 && product.isProducing == false)
+    }
+
     loadProducts = async () => {
         this.setInitialLoading(true);
 
@@ -90,7 +102,7 @@ export default class ProductStore {
         }
     }
 
-    private getProduct = (id: string) => {
+     getProduct = (id: string) => {
         return this.products.get(id);
     }
 

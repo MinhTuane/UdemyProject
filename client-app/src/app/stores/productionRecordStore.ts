@@ -12,7 +12,7 @@ export default class ProductionRecordStore {
     constructor() {
         makeAutoObservable(this);
     }
-
+    loading =false;
     loadingInitial = false;
     productionRecords = new Map<string,ProductionRecord>();
 
@@ -34,7 +34,7 @@ export default class ProductionRecordStore {
     }
 
     private setproductionRecord = (productionRecord : ProductionRecord) => {
-        this.productionRecords.set(productionRecord.id,productionRecord);
+        this.productionRecords.set(productionRecord.id!,productionRecord);
     }
 
     setInitialLoading(flag: boolean) {
@@ -42,32 +42,32 @@ export default class ProductionRecordStore {
     }
 
     createProductionRecord = async (productionRecord: ProductionRecord) => {
-        this.setInitialLoading(true);
+        this.loading =true;
         productionRecord.id = uuid();
         try {
             await agent.ProductionRecords.create(productionRecord);
             runInAction(() => {
                 this.productionRecords.set(productionRecord.id, productionRecord)
-                this.setInitialLoading(false);
+                this.loading =false;
             })
         } catch (error) {
             runInAction(() => {
-                this.setInitialLoading(false);
+                this.loading =false;
             })
         }
     }
 
     updateProductionRecord = async (productionRecord: ProductionRecord) => {
-        this.setInitialLoading(true);
+        this.loading = true;
         try {
             await agent.ProductionRecords.update(productionRecord);
             runInAction(() => {
-                this.productionRecords.set(productionRecord.id, productionRecord);
-                this.setInitialLoading(false);
+                this.productionRecords.set(productionRecord.id!, productionRecord);
+                this.loading = false;
             })
         } catch (error) {
             runInAction(() => {
-                this.setInitialLoading(false);
+                this.loading = false;
             })
         }
     }

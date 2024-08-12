@@ -11,8 +11,9 @@ namespace Domain
         public int? Price { get; set; }
         public string Description { get; set; }
         public byte[] Image { get; set; }
-        public List<Material> Materials { get; set; } = new List<Material>();
-        public List<PurchaseOrder> PurchaseOrders { get; set; }= new List<PurchaseOrder>();
-        public List<ProductionRecord> ProductionRecords { get; set; } = new List<ProductionRecord>();      
+        public bool IsProducing { get; set; }
+        public List<MaterialProduct> MaterialProducts { get; set; }
+        public List<PurchaseOrder> PurchaseOrders { get; set; }
+        public List<ProductionRecord> ProductionRecords { get; set; }     
     }
 }

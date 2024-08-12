@@ -11,4 +11,5 @@ export interface PurchaseOrder {
     contractDate : Date | null,
     exportDate : Date | null,
     exportCountry : string,
+    isDelivered : boolean
 }

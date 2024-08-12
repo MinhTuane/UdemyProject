@@ -24,14 +24,7 @@ namespace Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Product>()
-                .HasMany(p => p.Materials)
-                .WithMany(m => m.Products)
-                .UsingEntity<Dictionary<string, object>>(
-                    "MaterialProduct",
-                    j => j.HasOne<Material>().WithMany().HasForeignKey("MaterialId"),
-                    j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId")
-                );
+            modelBuilder.Entity<MaterialProduct>().HasKey(mp=> new {mp.MaterialId,mp.ProductId});              
         }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ProductLine> ProductLines { get; set; }
@@ -42,5 +35,6 @@ namespace Persistence
         public DbSet<ProductionRecord> ProductionRecords { get; set; }
         public DbSet<AttendenceCheck> AttendenceChecks { get; set; }
         public DbSet<Salary> Salaries { get; set;}
+        public DbSet<MaterialProduct> MaterialProducts { get; set;}
     }
 }

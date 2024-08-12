@@ -8,27 +8,27 @@ namespace API.Controllers
     public class ProductsController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> GetProductLines() 
+        public async Task<IActionResult> GetProducts() 
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductLine(Guid id) 
+        public async Task<IActionResult> GetProduct(Guid id) 
         {
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProductLine([FromBody]Product product)
+        public async Task<IActionResult> CreateProduct([FromBody]Product product)
         {
             
             return HandleResult(await Mediator.Send(new Create.Command {Product=product}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditProductLine(Guid id, Product product)
+        public async Task<IActionResult> EditProduct(Guid id, Product product)
         {
             product.Id = id;
             await Mediator.Send(new Edit.Command {Product = product});
@@ -36,7 +36,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProductLine(Guid id)
+        public async Task<IActionResult> DeleteProduct(Guid id)
         {
            return HandleResult( await Mediator.Send(new Delete.Command{Id=id}));
         }

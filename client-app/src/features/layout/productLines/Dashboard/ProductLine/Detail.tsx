@@ -1,7 +1,7 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend} from "chart.js";
 
 ChartJS.register(LinearScale, PointElement, LineElement, Title, Tooltip, Legend, CategoryScale)
-import React from "react";
+import React, { useEffect, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
@@ -38,11 +38,50 @@ import {
 } from "../../Charts/ProductLineChart";
 
 import { Bar, Line } from "react-chartjs-2";
-
+import { useStore } from "../../../../../app/stores/store";
+import { ChartData } from "../../../../../app/models/chartdata";
 function ProductLineDashBoard() {
-  const [bigChartData, setbigChartData] = React.useState("data1");
-  const setBgChartData = (name:string) => {
-    setbigChartData(name);
+  const {productionRecordStore,productLineStore} = useStore();
+  const { dayData,monthData,yearData} = productionRecordStore;
+  const {choosingLine} = productLineStore;
+  const [data,setData] = useState<ChartData>();
+   useEffect(()=> {
+    fetchDayData();
+  },[choosingLine])
+
+  const fetchDayData = async () => {
+    try {
+      var newData = await dayData({
+        date: new Date(),
+        productId: choosingLine!.id
+      });
+      setData(newData); 
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    }
+  };
+
+  const fetchMonthData = async () => {
+    try {
+      var newData = await monthData({
+        date: new Date(),
+        productId: choosingLine!.id
+      });
+      setData(newData); 
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    }
+  };
+  const fetchYearData = async () => {
+    try {
+      var newData = await yearData({
+        date: new Date(),
+        productId: choosingLine!.id
+      });
+      setData(newData); 
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    }
   };
   return (
     <>
@@ -64,12 +103,12 @@ function ProductLineDashBoard() {
                       <Button
                         tag="label"
                         className={classNames("btn-simple", {
-                          active: bigChartData === "data1",
+                         
                         })}
                         color="info"
                         id="0"
                         size="sm"
-                        onClick={() => setBgChartData("data1")}
+                        onClick={fetchDayData}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
                           Day
@@ -84,9 +123,9 @@ function ProductLineDashBoard() {
                         size="sm"
                         tag="label"
                         className={classNames("btn-simple", {
-                          active: bigChartData === "data2",
+                          
                         })}
-                        onClick={() => setBgChartData("data2")}
+                        onClick={fetchMonthData}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
                           Month
@@ -101,9 +140,9 @@ function ProductLineDashBoard() {
                         size="sm"
                         tag="label"
                         className={classNames("btn-simple", {
-                          active: bigChartData === "data3",
+                          
                         })}
-                        onClick={() => setBgChartData("data3")}
+                        onClick={fetchYearData}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
                           Year
@@ -118,7 +157,7 @@ function ProductLineDashBoard() {
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
-                      <Line options={chartExample1.options} data={chartExample1[bigChartData]}/>
+                      <Line options={chartExample1.options} data={chartExample1.data(null,data!)}/>
                 </div>
               </CardBody>
             </Card>

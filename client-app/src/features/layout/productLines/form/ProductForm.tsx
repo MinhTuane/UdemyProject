@@ -28,6 +28,8 @@ export default observer(function ProductForm() {
         name: '',
         description: '',
         choseMaterials: null,
+        quantity:0,
+        isProducing : false
     })
     const validateionSchema = Yup.object({
         name: Yup.string().required('The Product name is required'),
@@ -47,6 +49,8 @@ export default observer(function ProductForm() {
             let newProduct ={
                 ...product,
                 id : uuid(),
+                quantity :0,
+                isProducing : false
             };
             createProduct(newProduct).then(()=> router.navigate(`/products/${newProduct.id}`))
         } else {

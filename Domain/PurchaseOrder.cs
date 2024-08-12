@@ -12,5 +12,6 @@ namespace Domain
         public DateTime ContractDate { get; set; }
         public DateTime ExportDate { get; set; }
         public string ExportCountry { get; set; }
+        public bool IsDelivered { get; set; }
     }
 }

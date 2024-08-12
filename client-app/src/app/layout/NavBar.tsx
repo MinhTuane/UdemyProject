@@ -1,4 +1,4 @@
-import { Button, Container, Menu, Image, Dropdown } from "semantic-ui-react";
+import { Button, Container, Menu, Image, Dropdown, MenuItem } from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css';
 import { Link, NavLink } from "react-router-dom";
 import { useStore } from "../stores/store";
@@ -17,10 +17,17 @@ export default observer(function NavBar() {
                 <Menu.Item as={NavLink} to='productLineDashBoard' name="Product Line"/>
                 <Menu.Item as={NavLink} to='/errors' name="Errors" />
                 <Menu.Item>
-                    <Button as={NavLink} to='createActivity' positive content='Create Activity' />
-                </Menu.Item>
-                <Menu.Item>
-                    <Button as={NavLink} to='createPurchaseOrder' positive content='Create Purchase Order' />
+                    Create
+                    <Dropdown>
+                        <Dropdown.Menu>
+                            <Dropdown.Item as={NavLink} to={'createActivity'} positive content='Create Activity'/>
+                            <Dropdown.Item as={NavLink} to='createPurchaseOrder' positive content='Create Purchase Order'/>
+                            <Dropdown.Item as={NavLink} to='createProduct' positive content='Create Product'/>
+                            <Dropdown.Item as={NavLink} to='createMaterial' positive content='Create Material'/>
+                            <Dropdown.Item as={NavLink} to='addProduct' positive content='Add Product'/>
+                            <Dropdown.Item as={NavLink} to='createCompany' positive content='Create Company'/>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Menu.Item>
                 <Menu.Item position="right">
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />

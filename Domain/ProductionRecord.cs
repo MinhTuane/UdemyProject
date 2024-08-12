@@ -1,4 +1,5 @@
 using System;
+using Domain.Enum;
 
 namespace Domain
 {
@@ -8,5 +9,6 @@ namespace Domain
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
         public DateTime ProductionDateTime { get; set; }
+        public string ProductStatus { get; set; }
     }
 }

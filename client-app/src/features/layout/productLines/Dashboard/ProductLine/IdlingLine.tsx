@@ -1,21 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useStore } from "../../../../../app/stores/store";
 import ProductListItem from "../../../Product/ProductListItem";
 import { observer } from "mobx-react-lite";
+import { Product } from "../../../../../app/models/product";
 
 export default observer (function IdlingLine() {
     const { productStore } = useStore();
-    const { loadProducts, products } = productStore;
-
+    const { loadProducts, products ,ProductProduce} = productStore;
+    const [product,setProducts] = useState<Product[]>([]);
     useEffect(()=>{
         if(products.size <=1) {
-            loadProducts();
+            loadProducts();  
         }
+        setProducts(ProductProduce);
     },[productStore,products.size])
 
     return (
-        Array.from(products.values()).map(product => (
+        product.map(product => (
             <ProductListItem product={product}/>
         ))
     )
