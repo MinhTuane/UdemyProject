@@ -1,7 +1,7 @@
 
 export interface ProductionRecord {
     id: string,
-    date: Date | null; 
+    productionDateTime: Date | null; 
     productId:string;
     productStatus: string,
 }

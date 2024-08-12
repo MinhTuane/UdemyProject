@@ -41,48 +41,77 @@ import { Bar, Line } from "react-chartjs-2";
 import { useStore } from "../../../../../app/stores/store";
 import { ChartData } from "../../../../../app/models/chartdata";
 function ProductLineDashBoard() {
+  const [bigChartData, setbigChartData] = React.useState("data1");
+  const setBgChartData = (name:string) => {
+    setbigChartData(name);
+  };
   const {productionRecordStore,productLineStore} = useStore();
   const { dayData,monthData,yearData} = productionRecordStore;
   const {choosingLine} = productLineStore;
-  const [data,setData] = useState<ChartData>();
+  const [data,setData] = useState<ChartData>({data:[],labels:[]});
    useEffect(()=> {
     fetchDayData();
   },[choosingLine])
 
   const fetchDayData = async () => {
+    setBgChartData("data1");
     try {
-      var newData = await dayData({
+      await dayData({
         date: new Date(),
-        productId: choosingLine!.id
+        productId: choosingLine!.productId!
+      }).then((response) => {
+        console.log(response);
+        
+        setData(response!)
+      }).catch((error)=> {
+        console.log(error);
+        
       });
-      setData(newData); 
+      
     } catch (error) {
       console.error("Failed to fetch data", error);
     }
   };
-
   const fetchMonthData = async () => {
+    setBgChartData("data2");
     try {
-      var newData = await monthData({
+      await monthData({
         date: new Date(),
-        productId: choosingLine!.id
+        productId: choosingLine!.productId!
+      }).then((response) => {
+        console.log(response);
+        
+        setData(response!)
+      }).catch((error)=> {
+        console.log(error);
+        
       });
-      setData(newData); 
+      
     } catch (error) {
       console.error("Failed to fetch data", error);
     }
   };
   const fetchYearData = async () => {
+    setBgChartData("data3");
     try {
-      var newData = await yearData({
+      await yearData({
         date: new Date(),
-        productId: choosingLine!.id
+        productId: choosingLine!.productId!
+      }).then((response) => {
+        console.log(response);
+        
+        setData(response!)
+      }).catch((error)=> {
+        console.log(error);
+        
       });
-      setData(newData); 
+      
     } catch (error) {
       console.error("Failed to fetch data", error);
     }
   };
+
+  
   return (
     <>
       <div className="content">
@@ -103,7 +132,7 @@ function ProductLineDashBoard() {
                       <Button
                         tag="label"
                         className={classNames("btn-simple", {
-                         
+                          active: bigChartData === "data1",
                         })}
                         color="info"
                         id="0"
@@ -123,7 +152,7 @@ function ProductLineDashBoard() {
                         size="sm"
                         tag="label"
                         className={classNames("btn-simple", {
-                          
+                          active: bigChartData === "data2",
                         })}
                         onClick={fetchMonthData}
                       >
@@ -140,7 +169,7 @@ function ProductLineDashBoard() {
                         size="sm"
                         tag="label"
                         className={classNames("btn-simple", {
-                          
+                          active: bigChartData === "data3",
                         })}
                         onClick={fetchYearData}
                       >
@@ -157,7 +186,7 @@ function ProductLineDashBoard() {
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
-                      <Line options={chartExample1.options} data={chartExample1.data(null,data!)}/>
+                      <Line options={chartExample1.options} data={chartExample1.data(data!)}/>
                 </div>
               </CardBody>
             </Card>

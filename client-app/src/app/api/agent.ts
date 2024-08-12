@@ -141,9 +141,9 @@ const ProductionRecords = {
     create: (productionRecord:ProductionRecord) => axios.post<void>('/productionRecords',productionRecord),
     update: (productionRecord:ProductionRecord) => axios.put<void>(`/productionRecords/${productionRecord.id}`,productionRecord),
     delete: (id:string) => axios.delete<void>(`/productionRecords/${id}`),
-    year:(productdata:ProductData) => request.get<ChartData>(`/productionRecords/year:${productdata.productId}`),
-    month:(productdata:ProductData) => request.get<ChartData>(`/productionRecords/month:${productdata.productId}`),
-    day:(productdata:ProductData) => request.get<ChartData>(`/productionRecords/day:${productdata.productId}`)
+    year:(productdata:ProductData) => request.get<ChartData>(`/productionRecords/year/${productdata.productId}`),
+    month:(productdata:ProductData) => request.get<ChartData>(`/productionRecords/month/${productdata.productId}`),
+    day:(productdata:ProductData) => request.get<ChartData>(`/productionRecords/day/${productdata.productId}`)
 }
 
 const CountryNames = {

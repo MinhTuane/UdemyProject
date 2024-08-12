@@ -10,7 +10,6 @@ namespace Application.ProductionRecords
     {
         public class Query : IRequest<Result<List<ProductionRecord>>> 
         {
-            public Guid ProductId { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<List<ProductionRecord>>>
@@ -26,7 +25,7 @@ namespace Application.ProductionRecords
             {
                 
                 return Result<List<ProductionRecord>>
-                .Success(await _context.ProductionRecords.Where(x=> x.ProductId == request.ProductId).ToListAsync());
+                .Success(await _context.ProductionRecords.ToListAsync());
             }
         }
     }

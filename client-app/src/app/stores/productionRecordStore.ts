@@ -94,7 +94,8 @@ export default class ProductionRecordStore {
             runInAction(() => {
                 this.setInitialLoading(false);
             })
-            return chartData;
+            if(chartData)
+                return chartData;
         } catch (error) {
             runInAction(() => {
                 this.setInitialLoading(false);
@@ -109,7 +110,8 @@ export default class ProductionRecordStore {
             runInAction(() => {
                 this.setInitialLoading(false);
             })
-            return chartData;
+            if(chartData)
+                return chartData;
         } catch (error) {
             runInAction(() => {
                 this.setInitialLoading(false);
@@ -124,7 +126,8 @@ export default class ProductionRecordStore {
             runInAction(() => {
                 this.setInitialLoading(false);
             })
-            return chartData;
+            if(chartData)
+                return chartData;
         } catch (error) {
             runInAction(() => {
                 this.setInitialLoading(false);

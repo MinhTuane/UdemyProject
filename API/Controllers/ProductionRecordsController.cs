@@ -42,25 +42,25 @@ namespace API.Controllers
            return HandleResult( await Mediator.Send(new Delete.Command{Id=id}));
         }
 
-        [Authorize]
-        [HttpGet("year:{id}")]
-        public async Task<IActionResult> GetProductByYear(Guid id,DateTime Date) 
+
+        [HttpGet("year/{id}")]
+        public async Task<IActionResult> GetProductByYear(Guid id) 
         {
-            return HandleResult(await Mediator.Send(new GetProductEachMonth.Query{ProductId = id,Date = Date}));
+            return HandleResult(await Mediator.Send(new GetProductEachMonth.Query{ProductId = id,Date = DateTime.Now}));
         }
 
-        [Authorize]
-        [HttpGet("month:{id}")]
-        public async Task<IActionResult> GetProductByMonth(Guid id,DateTime Date) 
+ 
+        [HttpGet("month/{id}")]
+        public async Task<IActionResult> GetProductByMonth(Guid id) 
         {
-            return HandleResult(await Mediator.Send(new GetProductEachDay.Query{ProductId = id,Date = Date}));
+            return HandleResult(await Mediator.Send(new GetProductEachDay.Query{ProductId = id,Date =  DateTime.Now}));
         }
 
-        [Authorize]
-        [HttpGet("day:{id}")]
-        public async Task<IActionResult> GetProductByDay(Guid id,DateTime Date) 
+       
+        [HttpGet("day/{id}")]
+        public async Task<IActionResult> GetProductByDay(Guid id) 
         {
-            return HandleResult(await Mediator.Send(new GetProductEachHour.Query{ProductId = id,Date = Date}));
+            return HandleResult(await Mediator.Send(new GetProductEachHour.Query{ProductId = id,Date = DateTime.Now}));
         }
     }
 }

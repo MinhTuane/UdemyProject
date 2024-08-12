@@ -31,12 +31,12 @@ namespace Application.ProductionRecords
                 long[] ProductEachHour = new long[24];
                 string[] Labels = new string[24];
                 for(int i=0;i<24;i++) {
-                    DateTime StartDate = new DateTime(request.Date.Year,request.Date.Month,request.Date.Day,i+1,0,0);
+                    DateTime StartDate = new DateTime(request.Date.Year,request.Date.Month,request.Date.Day,i,0,0);
                     DateTime EndDate = StartDate.AddHours(1);
                     long count =await _context.ProductionRecords.Where(x=> x.ProductId == request.ProductId)
                                 .Where(x=> x.ProductionDateTime < EndDate && x.ProductionDateTime >= StartDate).LongCountAsync();
                     ProductEachHour[i] = count;
-                    Labels[i] = (1+i).ToString();
+                    Labels[i] = (i).ToString();
                 }
                 
                 return Result<ChartProductDto>

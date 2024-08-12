@@ -25,7 +25,7 @@ export default observer(function MaterialForm() {
             id:'',
             productId : '',
             productStatus:'Good', 
-            date: new Date()        
+            productionDateTime: new Date()        
     });
 
     useEffect(() => {
@@ -37,13 +37,13 @@ export default observer(function MaterialForm() {
                 ...newProducitonRecord,
                 id: uuid()
             }
-            createProductionRecord(newProducitonRecord).then(()=> toast.success);
+            createProductionRecord(newProducitonRecord).then(()=> toast.success('Add Product Successful'));
     }
 
     const validationChema = Yup.object({
         productId: Yup.string().required('The Product is required'),
         productStatus: Yup.string().required('The Status is required'),
-        date: Yup.string().required(),
+        productionDateTime: Yup.string().required(),
     })
         if (loadingInitial) return <LoadingComponent content="loading .." />
 
@@ -65,8 +65,8 @@ export default observer(function MaterialForm() {
                                 name="productStatus"
                             />
                             <MyDateInput
-                                placeholderText="date"
-                                name='date'
+                                placeholderText="production DateTime"
+                                name='productionDateTime'
                                 showTimeSelect
                                 timeCaption="time"
                                 dateFormat='MMMM d, yyyy h:mm aa'
