@@ -4,6 +4,17 @@
   padding-right: 0px;
 }
 
+.ui.modal {
+  z-index: 10000 !important;
+}
+
+
+.detailUser {
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
 .dashboardProductLine {
   padding-left: 100px;
   padding-right: 0px;

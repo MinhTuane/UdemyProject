@@ -3,7 +3,7 @@ import { Activity } from "../models/activity";
 import { toast } from "react-toastify";
 import { router } from "../router/route";
 import { store } from "../stores/store";
-import { AppUser, User, UserFormValues } from "../models/user";
+import { User, UserFormValues } from "../models/user";
 import { Material } from "../models/material";
 import { ProductLine } from "../models/productLine";
 import { Product } from "../models/product";
@@ -12,6 +12,7 @@ import { Company } from "../models/company";
 import { ProductionRecord } from "../models/productionRecord";
 import {  ProductData } from "../models/productData";
 import { ChartData } from "../models/chartdata";
+import {  AttendenceCheck } from "../models/attendenceCheck";
 
 
 const sleep = (delay: number) => {
@@ -73,6 +74,12 @@ axios.interceptors.response.use(async response => {
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if(token) config.headers.Authorization =`Bearer ${token}`;
+    return config;
+})
+
 const request = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body:{}) => axios.post<T>(url, body,{headers:{"content-type":"application/json"}}).then(responseBody),
@@ -87,11 +94,19 @@ const Activities = {
     update: (activity: Activity) => axios.put<void>(`/activities/${activity.id}`, activity),
     delete: (id: string) => axios.delete<void>(`/activities/${id}`)
 }
+const AttendenceChecks = {
+    list: () => request.get<AttendenceCheck[]>('/attendenceChecks'),
+    details: (id: string) => request.get<AttendenceCheck>(`/attendenceChecks/${id}`),
+    create: (activity: AttendenceCheck) => axios.post<void>('/attendenceChecks', activity),
+    update: (activity: AttendenceCheck) => axios.put<void>(`/attendenceChecks/${activity.id}`, activity),
+    delete: (id: string) => axios.delete<void>(`/attendenceChecks/${id}`)
+}
 
 const Account = {
     current : () => request.get<User>('/account'),
     login: (user: UserFormValues) => request.post<User>('/account/login',user),
     register: (user: UserFormValues) => request.post<User>('/account/register',user),
+    logout: () => request.post<void>('/account/logout','')
 }
 
 const Materials = {
@@ -148,11 +163,11 @@ const ProductionRecords = {
 }
 
 const CountryNames = {
-    list : ()=> request.get<String[]>('/country'),
+    list : ()=> request.get<String[]>('/countries'),
 }
 
 const Admin = {
-    listUser : () => request.get<AppUser[]>('/admin')
+    listUser : () => request.get<User[]>('/admin')
 }
 
 const agent = {
@@ -165,7 +180,8 @@ const agent = {
     CountryNames,
     Companies,
     ProductionRecords,
-    Admin
+    Admin,
+    AttendenceChecks
 }
 
 export default agent;

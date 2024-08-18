@@ -14,6 +14,9 @@ import PurchaseOrderForm from "../../features/layout/PurchaseOrder/Form/Purchase
 import AddProduct from "../../features/layout/ProductionForm/AddProduct";
 import CompanyForm from "../../features/layout/Companies/form/CompanyForm";
 import Profile from "../../features/layout/users/Profile";
+import AttendenceCheckForm from "../../features/layout/Admin/AttendenceCheckForm";
+import Attendence from "../../features/layout/users/Attendence";
+import ManageUsers from "../../features/layout/Admin/ManageUsers";
 
 export const routes: RouteObject[] = [
     {
@@ -21,6 +24,9 @@ export const routes: RouteObject[] = [
         element: <App/>,
         children:[
             {path:'activities',element:<ActivityDashboard/>},
+            {path:'attendenceCheckForm',element:<AttendenceCheckForm/>},
+            {path:'manageUsers',element:<ManageUsers/>},
+            {path:'attendence',element:<Attendence/>},
             {path:'activities/:id',element:<ActivityDetails/>},
             {path:'productLineDashBoard',element:<DashBoard/>},
             {path:'createActivity',element:<ActivityForm key='create'/>},
@@ -31,7 +37,7 @@ export const routes: RouteObject[] = [
             {path:'createProduct',element:<ProductForm key='create'/>},
             {path:'createPurchaseOrder',element:<PurchaseOrderForm key='create'/>},
             {path:'login',element:<LoginForm/>},
-            {path:'profile',element:<Profile/>},
+            {path:'profile/:username',element:<Profile/>},
             {path:'errors',element:<TestErrors/>},
             {path:'not-found',element:<NotFound/>},
             {path:'server-error',element:<ServerError/>},

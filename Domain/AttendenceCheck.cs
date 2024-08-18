@@ -11,7 +11,7 @@ namespace Domain
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
-        public WorkStatus WorkStatus {get; set;}
+        public string WorkStatus {get; set;}
         [ForeignKey(nameof(AppUser))]
         public string UserId { get; set; }
         public AppUser User { get; set; }

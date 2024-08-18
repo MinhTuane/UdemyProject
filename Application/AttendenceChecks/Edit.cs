@@ -12,7 +12,7 @@ namespace Application.AttendenceChecks
     {
         public class Command : IRequest<Result<Unit>> 
         {
-            public AttendenceCheck  attendenceCheck{ get; set; }
+            public AttendenceCheck  AttendenceCheck{ get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -36,11 +36,11 @@ namespace Application.AttendenceChecks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var attendenceCheck = await _context.AttendenceChecks.FindAsync(request.attendenceCheck);
+                var attendenceCheck = await _context.AttendenceChecks.FindAsync(request.AttendenceCheck);
 
                 if(attendenceCheck == null) return null;
 
-                _mapper.Map(request.attendenceCheck,attendenceCheck);
+                _mapper.Map(request.AttendenceCheck,attendenceCheck);
 
                 var result = await _context.SaveChangesAsync() > 0;
                 if(!result) return Result<Unit>.Failure("Fail to update attendence check");

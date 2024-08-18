@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240813044514_AssignProduct2")]
-    partial class AssignProduct2
+    [Migration("20240817121513_register")]
+    partial class register
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,8 +145,8 @@ namespace Persistence.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("WorkStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("WorkStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

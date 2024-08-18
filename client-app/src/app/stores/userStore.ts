@@ -23,17 +23,42 @@ export default class UserStore {
             
             store.commonStore.setToken(user.token);
             runInAction(()=> this.user=user)
-            router.navigate('/activities')
+            router.navigate('/productLineDashBoard')
+            store.modalStore.closeModal();
         } catch (error) {
             console.log(error);
         }
             
     }
 
-    logout = () => {
-        store.commonStore.setToken(null);
-        localStorage.removeItem('jwt');
-        this.user = null;
-        router.navigate('/');
+    register = async (creds : UserFormValues) => {
+        try {
+            const user = await agent.Account.register(creds);
+            store.commonStore.setToken(user.token);
+            runInAction(()=> this.user=user)
+            router.navigate('/productLineDashBoard')
+            store.modalStore.closeModal();
+        } catch (error) {
+            console.log(error);
+        }
+            
+    }
+
+    logout = async () => {
+        
+            store.commonStore.setToken(null);
+            localStorage.removeItem('jwt');
+            this.user = null;
+            router.navigate('/');
+    }
+
+    getUser = async () => {
+        try{
+            const user = await agent.Account.current();
+            runInAction(() => this.user = user)
+        }catch(error) {
+            console.log(error);
+            
+        }
     }
 }

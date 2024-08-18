@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class CompaniesController : BaseApiController
     {
         [HttpGet]
@@ -13,23 +14,21 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
-
-        [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMaterial(Guid id) 
+        public async Task<IActionResult> GetCompany(Guid id) 
         {
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMaterial([FromBody]Company company)
+        public async Task<IActionResult> CreateCompany([FromBody]Company company)
         {
             
             return HandleResult(await Mediator.Send(new Create.Command {Company=company}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Editcompany(Guid id, Company company)
+        public async Task<IActionResult> EditCompany(Guid id, Company company)
         {
             company.Id = id;
             await Mediator.Send(new Edit.Command {Company = company});

@@ -9,6 +9,9 @@ import { PurchaseOrderStore } from "./purchaseOrderStore";
 import CountryStore from "./countryStore";
 import CompanyStore from "./companyStore";
 import ProductionRecordStore from "./productionRecordStore";
+import AdminStore from "./adminStore";
+import AttendenceCheckStore from "./attendenceCheckStore";
+import ModalStore from "./modalStore";
 
 
 interface Store {
@@ -22,6 +25,9 @@ interface Store {
     countryStore : CountryStore;
     companyStore : CompanyStore;
     productionRecordStore : ProductionRecordStore;
+    adminStore : AdminStore;
+    attendenceCheckStore : AttendenceCheckStore;
+    modalStore : ModalStore;
 }
 
 export const store : Store = {
@@ -35,6 +41,9 @@ export const store : Store = {
     countryStore : new CountryStore(),
     companyStore : new CompanyStore(),
     productionRecordStore : new ProductionRecordStore(),
+    adminStore : new AdminStore(),
+    attendenceCheckStore : new AttendenceCheckStore(),
+    modalStore : new ModalStore(),
 }
 
 export const StoreContext = createContext(store);

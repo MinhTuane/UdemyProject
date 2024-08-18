@@ -10,6 +10,7 @@ namespace Domain
         [ForeignKey("ProductLine")]
         public Guid? ProductLineId { get; set; }
         public ProductLine ProductLine { get; set; }
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }

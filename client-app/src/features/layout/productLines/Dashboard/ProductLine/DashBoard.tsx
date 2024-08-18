@@ -3,9 +3,6 @@ import React, { useEffect } from "react";
 
 import Sidebar from "./Sidebar";
 import Detail from "./Detail";
-
-
-
 import { BackgroundColorContext } from "../../../../../contexts/BackgroundColorContext";
 import { useStore } from "../../../../../app/stores/store";
 import LoadingComponent from "../../../../../app/layout/loadingComponent";
@@ -35,7 +32,7 @@ export default observer(function DashBoard() {
           <div className="wrapper">
             <Sidebar
             />
-            <div className="main-panel"  ref={mainPanelRef} datatype={color}>
+            <div className="dashboardProductLine"  ref={mainPanelRef} datatype={color}>
               {choosingLine?.status == "Idle" ?
               <IdlingLine/>
               :

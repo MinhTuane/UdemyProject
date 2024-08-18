@@ -4,7 +4,7 @@ using Domain;
 using FluentValidation;
 using MediatR;
 using Persistence;
-namespace Application.Schedules
+namespace Application.AttendenceChecks
 {
     public class Create
     {

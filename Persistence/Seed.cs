@@ -228,10 +228,10 @@ namespace Persistence
             {
                 var users = new List<AppUser>
                 {
-                    new AppUser{DisplayName = "Tuan", UserName = "Tuan", Email = "tuan@test.com",DateOfBirth=new DateOnly(2000,04,28)},
-                    new AppUser{DisplayName = "Tom", UserName = "Tom", Email = "tom@test.com",DateOfBirth=new DateOnly(2000,04,28)},
-                    new AppUser{DisplayName = "Jane", UserName = "jane", Email = "jane@test.com",DateOfBirth=new DateOnly(2000,04,28)},
-                    new AppUser{DisplayName = "Bob", UserName = "bob", Email = "bob@test.com",DateOfBirth=new DateOnly(2000,04,28)},
+                    new AppUser{DisplayName = "Tuan", UserName = "Tuan", Email = "tuan@test.com",DateOfBirth=new DateTime(2000,04,28)},
+                    new AppUser{DisplayName = "Tom", UserName = "Tom", Email = "tom@test.com",DateOfBirth=new DateTime(2000,04,28)},
+                    new AppUser{DisplayName = "Jane", UserName = "jane", Email = "jane@test.com",DateOfBirth=new DateTime(2000,04,28)},
+                    new AppUser{DisplayName = "Bob", UserName = "bob", Email = "bob@test.com",DateOfBirth=new DateTime(2000,04,28)},
                 };
 
                 foreach (var user in users)

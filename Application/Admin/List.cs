@@ -1,36 +1,51 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Application.Core;
+using Application.Profiles;
+using AutoMapper;
+
 using Domain;
 using MediatR;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+
 using Persistence;
 
 namespace Application.Admin
 {
     public class List
     {
-        public class Query : IRequest<Result<List<AppUser>>> { }
+        public class Query : IRequest<Result<List<Profiles.Profile>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<AppUser>>>
+        public class Handler : IRequestHandler<Query, Result<List<Profiles.Profile>>>
         {
-            
+        
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
             
-            public Handler(UserManager<AppUser> userManager)
+            public Handler(DataContext context,IMapper mapper,UserManager<AppUser> userManager)
             {
             _userManager = userManager;
-
+            _mapper = mapper;
+            _context = context;
             }
 
-            public async Task<Result<List<AppUser>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Profiles.Profile>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                
-                return Result<List<AppUser>>.Success(await _userManager.Users.ToListAsync());
+                var users = await _context.Users.ToListAsync(cancellationToken);
+
+                var profileList = new List<Profiles.Profile>();
+
+                foreach (var user in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var profile = _mapper.Map<Profiles.Profile>(user);
+                    profile.Role = roles.FirstOrDefault(); 
+                    profileList.Add(profile);
+                }
+
+                return Result<List<Profiles.Profile>>.Success(profileList);
             }
         }
     }

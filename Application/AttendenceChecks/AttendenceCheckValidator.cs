@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Domain;
 using FluentValidation;
 
-namespace Application.Schedules
+namespace Application.AttendenceChecks
 {
     public class ScheduleValidator : AbstractValidator<AttendenceCheck>
     {

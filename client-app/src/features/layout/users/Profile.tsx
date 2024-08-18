@@ -1,6 +1,6 @@
 import { Label, MenuItem, Segment, SegmentGroup, Tab, TabPane } from "semantic-ui-react";
 import DetailUSer from "./DetailUser";
-import Schedule from "./Schedule";
+import Schedule from "./Salary";
 
 export default function Profile() {
 

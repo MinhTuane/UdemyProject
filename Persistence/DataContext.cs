@@ -37,6 +37,7 @@ namespace Persistence
             .HasForeignKey(mp =>mp.MaterialId);        
         }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<ProductLine> ProductLines { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Material> Materials { get; set; }

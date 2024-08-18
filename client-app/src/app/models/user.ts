@@ -1,8 +1,12 @@
 export interface User {
+    id:string,
     username :string,
-    displayname: string,
+    displayName: string,
     token:string,
     image?:string,
+    dateOfBirth : string,
+    productLineId? : string,
+    role: string
 }
 
 export interface UserFormValues {
@@ -10,13 +14,6 @@ export interface UserFormValues {
     password: string;
     displayName?:string;
     username?:string;
-}
-
-export interface AppUser {
-    username :string,
-    displayname: string,
-    token:string,
-    image?:string,
-    dateOfBirth : string,
-    productLineId? : string
+    role?:string;
+    dateOfBirth?:Date;
 }

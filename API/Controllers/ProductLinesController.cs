@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class ProductLinesController : BaseApiController
     {
         [HttpGet]
@@ -13,6 +14,7 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductLine(Guid id) 
         {
