@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
@@ -22,7 +23,12 @@ namespace API.Services
                 new Claim(ClaimTypes.Name,user.UserName),
                 new Claim(ClaimTypes.NameIdentifier,user.Id),
                 new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.Role,"Admin"),
+                new Claim(ClaimTypes.Role,"Manager"),
+                new Claim(ClaimTypes.Role,"Staff"),
             };
+
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]));
             var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);

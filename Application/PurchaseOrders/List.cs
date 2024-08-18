@@ -1,21 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Persistence;
 
 namespace Application.PurchaseOrders
 {
     public class List
     {
-        public class Query : IRequest<Result<List<ProductLine>>> { }
+        public class Query : IRequest<Result<List<PurchaseOrder>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<ProductLine>>>
+        public class Handler : IRequestHandler<Query, Result<List<PurchaseOrder>>>
         {
             private readonly DataContext _context;
             
@@ -24,10 +20,10 @@ namespace Application.PurchaseOrders
                 _context = context;
             }
 
-            public async Task<Result<List<ProductLine>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<PurchaseOrder>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 
-                return Result<List<ProductLine>>.Success(await _context.ProductLines.ToListAsync());
+                return Result<List<PurchaseOrder>>.Success(await _context.PurchaseOrders.ToListAsync());
             }
         }
     }

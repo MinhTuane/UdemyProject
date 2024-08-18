@@ -2,7 +2,7 @@ export interface User {
     username :string,
     displayname: string,
     token:string,
-    image?:string
+    image?:string,
 }
 
 export interface UserFormValues {
@@ -10,4 +10,13 @@ export interface UserFormValues {
     password: string;
     displayName?:string;
     username?:string;
+}
+
+export interface AppUser {
+    username :string,
+    displayname: string,
+    token:string,
+    image?:string,
+    dateOfBirth : string,
+    productLineId? : string
 }

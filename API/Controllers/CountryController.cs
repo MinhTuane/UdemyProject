@@ -3,7 +3,7 @@ using System.Globalization;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CountryController : ControllerBase
+public class CountriesController : ControllerBase
 {
     [HttpGet]
     public IActionResult GetCountryNames()

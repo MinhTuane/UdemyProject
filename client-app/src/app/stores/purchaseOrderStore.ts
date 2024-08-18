@@ -38,6 +38,19 @@ export class PurchaseOrderStore {
         this.purchaseOrders.set(purchaseOrder.id, purchaseOrder);
     }
 
+    getCountryData = async (productId:string) => {
+        try {
+            const countriesData = await agent.PurchaseOrders.country(productId);
+            runInAction(()=> {
+                
+            })
+            if(countriesData)
+                return countriesData;
+        } catch {
+
+        }
+    } 
+
     loadPurchaseOrder = async (id: string) => {
         this.setLoadingInitial(true);
         const purchaseOrder = this.getPurchaseOrder(id);

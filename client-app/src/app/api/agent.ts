@@ -3,7 +3,7 @@ import { Activity } from "../models/activity";
 import { toast } from "react-toastify";
 import { router } from "../router/route";
 import { store } from "../stores/store";
-import { User, UserFormValues } from "../models/user";
+import { AppUser, User, UserFormValues } from "../models/user";
 import { Material } from "../models/material";
 import { ProductLine } from "../models/productLine";
 import { Product } from "../models/product";
@@ -124,7 +124,8 @@ const PurchaseOrders = {
     details:(id:string) => request.get<PurchaseOrder>(`/purchaseOrders/${id}`),
     create: (purchaseOrder:PurchaseOrder) => axios.post<void>('/purchaseOrders',purchaseOrder),
     update: (purchaseOrder:PurchaseOrder) => axios.put<void>(`/purchaseOrders/${purchaseOrder.id}`,purchaseOrder),
-    delete: (id:string) => axios.delete<void>(`/purchaseOrders/${id}`)
+    delete: (id:string) => axios.delete<void>(`/purchaseOrders/${id}`),
+    country :(id:string) => request.get<ChartData>(`/purchaseOrders/country/${id}`)
 }
 
 const Companies = {
@@ -150,6 +151,10 @@ const CountryNames = {
     list : ()=> request.get<String[]>('/country'),
 }
 
+const Admin = {
+    listUser : () => request.get<AppUser[]>('/admin')
+}
+
 const agent = {
     Activities,
     Account,
@@ -159,7 +164,8 @@ const agent = {
     PurchaseOrders,
     CountryNames,
     Companies,
-    ProductionRecords
+    ProductionRecords,
+    Admin
 }
 
 export default agent;

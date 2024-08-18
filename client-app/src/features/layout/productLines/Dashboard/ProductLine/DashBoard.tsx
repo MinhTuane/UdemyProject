@@ -35,7 +35,7 @@ export default observer(function DashBoard() {
           <div className="wrapper">
             <Sidebar
             />
-            <div className="dashboardProductLine"  ref={mainPanelRef} datatype={color}>
+            <div className="main-panel"  ref={mainPanelRef} datatype={color}>
               {choosingLine?.status == "Idle" ?
               <IdlingLine/>
               :

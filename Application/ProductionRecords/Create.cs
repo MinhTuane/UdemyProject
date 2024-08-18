@@ -31,6 +31,7 @@ namespace Application.ProductionRecords
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 _context.ProductionRecords.Add(request.ProductionRecord);
+                Console.WriteLine(request.ProductionRecord.ProductionDateTime);
 
                 var result = await _context.SaveChangesAsync() > 0;
 

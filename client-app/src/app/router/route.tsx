@@ -13,6 +13,7 @@ import DashBoard from "../../features/layout/productLines/Dashboard/ProductLine/
 import PurchaseOrderForm from "../../features/layout/PurchaseOrder/Form/PurchaseOrderForm";
 import AddProduct from "../../features/layout/ProductionForm/AddProduct";
 import CompanyForm from "../../features/layout/Companies/form/CompanyForm";
+import Profile from "../../features/layout/users/Profile";
 
 export const routes: RouteObject[] = [
     {
@@ -30,6 +31,7 @@ export const routes: RouteObject[] = [
             {path:'createProduct',element:<ProductForm key='create'/>},
             {path:'createPurchaseOrder',element:<PurchaseOrderForm key='create'/>},
             {path:'login',element:<LoginForm/>},
+            {path:'profile',element:<Profile/>},
             {path:'errors',element:<TestErrors/>},
             {path:'not-found',element:<NotFound/>},
             {path:'server-error',element:<ServerError/>},

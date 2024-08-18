@@ -24,7 +24,17 @@ namespace Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<MaterialProduct>().HasKey(mp=> new {mp.MaterialId,mp.ProductId});              
+            modelBuilder.Entity<MaterialProduct>().HasKey(mp=> new {mp.MaterialId,mp.ProductId}); 
+
+            modelBuilder.Entity<MaterialProduct>()
+            .HasOne(mp => mp.Product)      
+            .WithMany(p=>p.MaterialProducts)
+            .HasForeignKey(pm=>pm.ProductId);
+
+            modelBuilder.Entity<MaterialProduct>()
+            .HasOne(mp =>mp.Material)
+            .WithMany(m=>m.MaterialProducts)
+            .HasForeignKey(mp =>mp.MaterialId);        
         }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ProductLine> ProductLines { get; set; }

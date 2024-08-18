@@ -83,22 +83,22 @@ let chart1_2_options = {
   // // // used inside src/views/Dashboard.js
   // #########################################
   let chartExample2 = {
-    data: (canvas:any) => {
-      let ctx = canvas.getContext("2d");
+    data: () => {
+      // let ctx = canvas.getContext("2d");
   
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+      // let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
   
-      gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-      gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-      gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
+      // gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
+      // gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
+      // gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
   
       return {
-        labels: ["JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+        labels: [1,2,3],
         datasets: [
           {
             label: "Data",
             fill: true,
-            backgroundColor: gradientStroke,
+            backgroundColor: "rgba(29,140,248,0)",
             borderColor: "#1f8ef1",
             borderWidth: 2,
             borderDash: [],
@@ -110,7 +110,7 @@ let chart1_2_options = {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [25000, 12000, 23000, 10000, 5000, 17000],
+            data: [1,2,3],
           },
         ],
       };

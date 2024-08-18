@@ -9,27 +9,29 @@ namespace API.Controllers
     public class PurchaseOrdersController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> GetProductLines() 
+        public async Task<IActionResult> GetPurchaseOrders() 
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        
+
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductLine(Guid id) 
+        public async Task<IActionResult> GetPurchaseOrder(Guid id) 
         {
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProductLine([FromBody]PurchaseOrder PurchaseOrder)
+        public async Task<IActionResult> CreatePurchaseOrder([FromBody]PurchaseOrder PurchaseOrder)
         {
             
             return HandleResult(await Mediator.Send(new Create.Command {PurchaseOrder=PurchaseOrder}));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditProductLine(Guid id, PurchaseOrder PurchaseOrder)
+        public async Task<IActionResult> EditPurchaseOrder(Guid id, PurchaseOrder PurchaseOrder)
         {
             PurchaseOrder.Id = id;
             await Mediator.Send(new Edit.Command {PurchaseOrder = PurchaseOrder});
@@ -37,9 +39,15 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProductLine(Guid id)
+        public async Task<IActionResult> DeletePurchaseOrder(Guid id)
         {
            return HandleResult( await Mediator.Send(new Delete.Command{Id=id}));
+        }
+
+        [HttpGet("/country/{id}")]
+        public async Task<IActionResult> GetCountries(Guid id) 
+        {
+            return HandleResult(await Mediator.Send(new GetCountry.Query{PruductId = id}));
         }
     }
 }

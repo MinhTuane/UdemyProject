@@ -45,13 +45,32 @@ function ProductLineDashBoard() {
   const setBgChartData = (name:string) => {
     setbigChartData(name);
   };
-  const {productionRecordStore,productLineStore} = useStore();
+  const {productionRecordStore,productLineStore,purchaseOrderStore} = useStore();
   const { dayData,monthData,yearData} = productionRecordStore;
+  const {getCountryData} = purchaseOrderStore;
   const {choosingLine} = productLineStore;
   const [data,setData] = useState<ChartData>({data:[],labels:[]});
+  const [countries,setCountries] = useState<ChartData>({data:[],labels:[]})
    useEffect(()=> {
     fetchDayData();
+    // fetchCountries();
   },[choosingLine])
+
+  const fetchCountries = async () => {
+      try {
+          await getCountryData(choosingLine!.productId!).then((response)=>{    
+            console.log(response);
+             
+            setCountries(response!)
+          }).catch((error)=>{
+            console.log(error);
+            
+          })
+      } 
+      catch {
+
+      }
+  }
 
   const fetchDayData = async () => {
     setBgChartData("data1");
@@ -203,7 +222,7 @@ function ProductLineDashBoard() {
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
-                        <Line options={chartExample2.options} data={chartExample2.data}/>
+                        <Line options={chartExample2.options} data={chartExample2.data()}/>
                 </div>
               </CardBody>
             </Card>

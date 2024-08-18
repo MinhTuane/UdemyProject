@@ -12,7 +12,7 @@ namespace Application.ProductionRecords
     {
         public class Query : IRequest<Result<ChartProductDto>> 
         {
-            public Guid ProductId { get; set; }
+            public Guid ProductId { get; set; }            
             public DateTime Date { get; set;}
         }
 
