@@ -33,7 +33,7 @@ namespace Application.Admin
 
             public async Task<Result<List<Profiles.Profile>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var users = await _context.Users.ToListAsync(cancellationToken);
+                var users = await _context.Users.Include(x => x.Photos).ToListAsync();
 
                 var profileList = new List<Profiles.Profile>();
 

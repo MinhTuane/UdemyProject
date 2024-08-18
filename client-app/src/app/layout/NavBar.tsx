@@ -12,16 +12,13 @@ export default observer(function NavBar() {
             <Container>
                 <Menu.Item as={NavLink} to='/' header>
                     <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
-                    Reactivities
+                    Line Production
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='activities' name="Activities" />
                 <Menu.Item as={NavLink} to='productLineDashBoard' name="Product Line"/>
-                <Menu.Item as={NavLink} to='/errors' name="Errors" />
                 <Menu.Item>
                     Create
                     <Dropdown>
                         <Dropdown.Menu>
-                            <Dropdown.Item as={NavLink} to={'createActivity'} positive content='Create Activity'/>
                             <Dropdown.Item as={NavLink} to='createPurchaseOrder' positive content='Create Purchase Order'/>
                             <Dropdown.Item as={NavLink} to='createProduct' positive content='Create Product'/>
                             <Dropdown.Item as={NavLink} to='createMaterial' positive content='Create Material'/>

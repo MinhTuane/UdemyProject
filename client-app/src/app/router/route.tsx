@@ -17,6 +17,7 @@ import Profile from "../../features/layout/users/Profile";
 import AttendenceCheckForm from "../../features/layout/Admin/AttendenceCheckForm";
 import Attendence from "../../features/layout/users/Attendence";
 import ManageUsers from "../../features/layout/Admin/ManageUsers";
+import Register from "../../features/layout/Admin/Register";
 
 export const routes: RouteObject[] = [
     {
@@ -25,6 +26,7 @@ export const routes: RouteObject[] = [
         children:[
             {path:'activities',element:<ActivityDashboard/>},
             {path:'attendenceCheckForm',element:<AttendenceCheckForm/>},
+            {path:'editUser/:id',element:<Register/>},
             {path:'manageUsers',element:<ManageUsers/>},
             {path:'attendence',element:<Attendence/>},
             {path:'activities/:id',element:<ActivityDetails/>},

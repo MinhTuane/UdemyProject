@@ -1,35 +1,35 @@
+
 import React, { useEffect, useState } from 'react';
 import { Container, Header, Statistic, Loader, Segment, Item } from 'semantic-ui-react';
 
 export default function SalarySummary() {
-    const [data, setData] = useState({ worked: 0, late: 0, off: 0 });
+    const [data, setData] = useState({ worked: 17, late: 3, off: 1 });
     const [salaryDetails, setSalaryDetails] = useState({
-        baseSalary: 0,
-        latePenalty: 0,
-        reward: 0,
-        totalSalary: 0,
+        baseSalary: 300000,
+        latePenalty: 50000,
+        reward: data.worked > 24 ? 1500000 : 0,
     });
     return (
         <>
-            <Container textAlign='center' className='salary-summary-container'>
-                <Header as='h2' textAlign='center' className='salary-summary-header'>
+            <Container  textAlign='center' className='salary-summary-container'>
+                <Header style= {{color:'white'}} as='h2' textAlign='center' className='salary-summary-header'>
                     Salary Summary
                 </Header>
 
-                <Statistic.Group widths='three' className='salary-summary-statistics'>
-                    <Statistic className='salary-statistic'>
-                        <Statistic.Value>{data.worked}</Statistic.Value>
-                        <Statistic.Label>Days Worked</Statistic.Label>
+                <Statistic.Group  widths='three' className='salary-summary-statistics'>
+                    <Statistic className='salary-statistic' >
+                        <Statistic.Value style= {{color:'white'}}>{data.worked}</Statistic.Value>
+                        <Statistic.Label style= {{color:'white'}}>Days Worked</Statistic.Label>
                     </Statistic>
 
                     <Statistic className='salary-statistic'>
-                        <Statistic.Value>{data.late}</Statistic.Value>
-                        <Statistic.Label>Days Late</Statistic.Label>
+                        <Statistic.Value style= {{color:'white'}}>{data.late}</Statistic.Value>
+                        <Statistic.Label style= {{color:'white'}}>Days Late</Statistic.Label>
                     </Statistic>
 
                     <Statistic className='salary-statistic'>
-                        <Statistic.Value>{data.off}</Statistic.Value>
-                        <Statistic.Label>Days Off</Statistic.Label>
+                        <Statistic.Value style= {{color:'white'}}>{data.off}</Statistic.Value>
+                        <Statistic.Label style= {{color:'white'}}>Days Off</Statistic.Label>
                     </Statistic>
                 </Statistic.Group>
             </Container>
@@ -38,15 +38,18 @@ export default function SalarySummary() {
                 <Segment>
                     <Item>
                         <Item.Content>
-                            <Header as='h4'>Salary : </Header>
+                            <Header as='h4'>Salary : {salaryDetails.baseSalary * data.worked} Vnd</Header>
                             <Item.Extra>300.000 per day</Item.Extra>
-                            <Header as='h4'>Penalty : </Header>
+                            <Header as='h4'>Penalty : {salaryDetails.latePenalty * (data.late + data.off*2)} Vnd</Header>
                             <Item.Extra>50.000 each</Item.Extra>
-                            <Header as='h4'>Reward : </Header>
+                            <Header as='h4'>Reward : {salaryDetails.reward } Vnd</Header>
                             <Item.Extra></Item.Extra>
                         </Item.Content>
                         <Item.Header>
-                            <Header as='h4'>Total Salary : </Header>
+                            <Header 
+                            as='h4'>Total Salary :  {salaryDetails.baseSalary * data.worked - 
+                            salaryDetails.latePenalty * (data.late + data.off*2) + salaryDetails.reward 
+                            } Vnd</Header>
                         </Item.Header>
                     </Item>
                 </Segment>

@@ -13,6 +13,7 @@ import { ProductionRecord } from "../models/productionRecord";
 import {  ProductData } from "../models/productData";
 import { ChartData } from "../models/chartdata";
 import {  AttendenceCheck } from "../models/attendenceCheck";
+import { Profile } from "../models/profile";
 
 
 const sleep = (delay: number) => {
@@ -166,6 +167,10 @@ const CountryNames = {
     list : ()=> request.get<String[]>('/countries'),
 }
 
+const Profiles = {
+    get : (username : string) => request.get<Profile>(`profiles/${username}`)
+}
+
 const Admin = {
     listUser : () => request.get<User[]>('/admin')
 }
@@ -181,7 +186,8 @@ const agent = {
     Companies,
     ProductionRecords,
     Admin,
-    AttendenceChecks
+    AttendenceChecks,
+    Profiles
 }
 
 export default agent;

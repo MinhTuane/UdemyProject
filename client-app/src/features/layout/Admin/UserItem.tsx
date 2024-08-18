@@ -1,7 +1,6 @@
 import { Button, Icon, Item, Label, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { SyntheticEvent, useState } from "react";
-import {format} from 'date-fns'
 import { useStore } from "../../../app/stores/store";
 import { User } from "../../../app/models/user";
 
@@ -22,7 +21,7 @@ export default function UserItem({ user }: props) {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image size="mini" circular src='/assets/user.png' rounded/>
+                        <Item.Image size="small" circular src={ user.image || '/assets/user.png'} rounded/>
                         <Item.Content>
                             <Item.Header > 
                             {user.displayName}</Item.Header>
@@ -36,10 +35,17 @@ export default function UserItem({ user }: props) {
             <Segment clearing>
                 <Button 
                 as={Link}
-                to={`/activities/${user.id}`}
+                to={`/editUser/${user.id}`}
                 color="teal"
                 floated='right'
-                content='View'
+                content='Edit'
+                />
+                <Button 
+                as={Link}
+                to={`/`}
+                color="red"
+                floated='right'
+                content='Delete'
                 />
             </Segment>
         </Segment.Group>

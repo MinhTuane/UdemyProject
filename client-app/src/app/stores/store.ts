@@ -12,6 +12,7 @@ import ProductionRecordStore from "./productionRecordStore";
 import AdminStore from "./adminStore";
 import AttendenceCheckStore from "./attendenceCheckStore";
 import ModalStore from "./modalStore";
+import ProfileStore from "./profileStore";
 
 
 interface Store {
@@ -28,6 +29,7 @@ interface Store {
     adminStore : AdminStore;
     attendenceCheckStore : AttendenceCheckStore;
     modalStore : ModalStore;
+    profileStore : ProfileStore;
 }
 
 export const store : Store = {
@@ -44,6 +46,7 @@ export const store : Store = {
     adminStore : new AdminStore(),
     attendenceCheckStore : new AttendenceCheckStore(),
     modalStore : new ModalStore(),
+    profileStore : new ProfileStore()
 }
 
 export const StoreContext = createContext(store);

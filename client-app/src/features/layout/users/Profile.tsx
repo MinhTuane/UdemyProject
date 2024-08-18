@@ -1,25 +1,31 @@
-import { Label, MenuItem, Segment, SegmentGroup, Tab, TabPane } from "semantic-ui-react";
-import DetailUSer from "./DetailUser";
-import Schedule from "./Salary";
+import { Grid} from "semantic-ui-react";
+import ProfileHeader from "./ProfileHead";
+import ProfileContent from "./ProfileContent";
+import { observer } from "mobx-react-lite";
+import { useParams } from "react-router";
+import { useStore } from "../../../app/stores/store";
+import { useEffect } from "react";
 
-export default function Profile() {
+export default observer( function Profile() {
+  const {username} = useParams<{username : string}>();
 
-    const panes = [
-        {
-          menuItem: { key: 'users', icon: 'users', content: 'Users' },
-          render: () => <TabPane>
-                            <DetailUSer/>
-                        </TabPane>,
-        },
-        {
-          menuItem: { key: 'users', icon: 'schedule', content: 'Schedule' },
-          render: () => <TabPane>
-                            <Schedule/>
-                        </TabPane>,
-        },       
-      ]
-    return (
-        <Tab panes={panes}>
-        </Tab>
-    )
-}
+  const{profileStore} = useStore();
+  const {loadProfile,loadingProfile,profile} = profileStore;
+
+  useEffect(() => {
+    if(username) loadProfile(username);
+  },[loadProfile,username])
+
+  return(
+    <Grid>
+        <Grid.Column width={16}>
+          {profile && 
+            <>
+              <ProfileHeader profile={profile}/> 
+              <ProfileContent profile={profile}/>
+            </>
+          }
+        </Grid.Column>
+    </Grid>
+)
+});

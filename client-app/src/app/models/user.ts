@@ -17,3 +17,9 @@ export interface UserFormValues {
     role?:string;
     dateOfBirth?:Date;
 }
+
+export interface Photo {
+    id :string,
+    url : string,
+    isMain:boolean
+}
