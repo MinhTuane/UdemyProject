@@ -3,7 +3,7 @@ import { Activity } from "../models/activity";
 import { toast } from "react-toastify";
 import { router } from "../router/route";
 import { store } from "../stores/store";
-import { User, UserFormValues } from "../models/user";
+import { Photo, User, UserFormValues } from "../models/user";
 import { Material } from "../models/material";
 import { ProductLine } from "../models/productLine";
 import { Product } from "../models/product";
@@ -168,7 +168,16 @@ const CountryNames = {
 }
 
 const Profiles = {
-    get : (username : string) => request.get<Profile>(`profiles/${username}`)
+    get : (username : string) => request.get<Profile>(`profiles/${username}`),
+    uploadPhoto:(file:Blob) => {
+        let formData = new FormData();
+        formData.append('File',file);
+        return axios.post<Photo>('photos',formData, {
+            headers:{'Content-Type':'multipart/form-data'}
+        })
+    },
+    setMainPhoto :(id:string) => request.post(`/photos/${id}/setMain`,{}),
+    deletePhoto: (id:string) => request.delete(`/photos/${id}`),
 }
 
 const Admin = {

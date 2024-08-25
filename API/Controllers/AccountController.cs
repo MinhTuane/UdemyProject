@@ -40,7 +40,8 @@ namespace API.Controllers
                     Image = user?.Photos?.FirstOrDefault(x=>x.IsMain)?.Url,
                     Token =await _tokenService.CreateToken(user),
                     Username = user.UserName,
-                    Role = role.FirstOrDefault()
+                    Role = role.FirstOrDefault(),
+                    DateOfBirth = user.DateOfBirth
                 };
             }
 
@@ -80,7 +81,8 @@ namespace API.Controllers
                     Image = user?.Photos?.FirstOrDefault(x=>x.IsMain)?.Url,
                     Token = await _tokenService.CreateToken(user),
                     Username = user.UserName,
-                    Role = registerDto.Role
+                    Role = registerDto.Role,
+                    DateOfBirth= registerDto.DateOfBirth
                 };
             }
 
@@ -100,7 +102,8 @@ namespace API.Controllers
                     Image = user?.Photos?.FirstOrDefault(x=>x.IsMain)?.Url,
                     Token = await _tokenService.CreateToken(user),
                     Username = user.UserName,
-                    Role = role.FirstOrDefault()
+                    Role = role.FirstOrDefault(),
+                    DateOfBirth = user.DateOfBirth
                 };
         }
     }
