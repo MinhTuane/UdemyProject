@@ -53,12 +53,13 @@ function ProductLineDashBoard() {
   const [countries,setCountries] = useState<ChartData>({data:[],labels:[]})
    useEffect(()=> {
     fetchDayData();
-    // fetchCountries();
+    fetchCountries();
   },[choosingLine])
 
   const fetchCountries = async () => {
       try {
-          await getCountryData(choosingLine!.productId!).then((response)=>{    
+          await getCountryData(choosingLine!.productId!)
+          .then((response)=>{    
             console.log(response);
              
             setCountries(response!)
@@ -78,9 +79,7 @@ function ProductLineDashBoard() {
       await dayData({
         date: new Date(),
         productId: choosingLine!.productId!
-      }).then((response) => {
-        console.log(response);
-        
+      }).then((response) => {      
         setData(response!)
       }).catch((error)=> {
         console.log(error);
@@ -91,6 +90,7 @@ function ProductLineDashBoard() {
       console.error("Failed to fetch data", error);
     }
   };
+
   const fetchMonthData = async () => {
     setBgChartData("data2");
     try {
@@ -98,18 +98,15 @@ function ProductLineDashBoard() {
         date: new Date(),
         productId: choosingLine!.productId!
       }).then((response) => {
-        console.log(response);
-        
         setData(response!)
       }).catch((error)=> {
         console.log(error);
-        
       });
-      
     } catch (error) {
       console.error("Failed to fetch data", error);
     }
   };
+
   const fetchYearData = async () => {
     setBgChartData("data3");
     try {
@@ -117,14 +114,10 @@ function ProductLineDashBoard() {
         date: new Date(),
         productId: choosingLine!.productId!
       }).then((response) => {
-        console.log(response);
-        
         setData(response!)
       }).catch((error)=> {
-        console.log(error);
-        
-      });
-      
+        console.log(error);        
+      });     
     } catch (error) {
       console.error("Failed to fetch data", error);
     }
@@ -238,7 +231,7 @@ function ProductLineDashBoard() {
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
-                        <Bar options={chartExample3.options} data={chartExample3.data}/>
+                        <Bar options={chartExample3.options} data={chartExample3.data(countries)}/>
                 </div>
               </CardBody>
             </Card>

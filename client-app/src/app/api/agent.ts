@@ -14,6 +14,7 @@ import {  ProductData } from "../models/productData";
 import { ChartData } from "../models/chartdata";
 import {  AttendenceCheck } from "../models/attendenceCheck";
 import { Profile } from "../models/profile";
+import { AttendenceData } from "../models/attendenceData";
 
 
 const sleep = (delay: number) => {
@@ -93,14 +94,16 @@ const Activities = {
     details: (id: string) => request.get<Activity>(`/activities/${id}`),
     create: (activity: Activity) => axios.post<void>('/activities', activity),
     update: (activity: Activity) => axios.put<void>(`/activities/${activity.id}`, activity),
-    delete: (id: string) => axios.delete<void>(`/activities/${id}`)
+    delete: (id: string) => axios.delete<void>(`/activities/${id}`),
 }
 const AttendenceChecks = {
     list: () => request.get<AttendenceCheck[]>('/attendenceChecks'),
     details: (id: string) => request.get<AttendenceCheck>(`/attendenceChecks/${id}`),
-    create: (activity: AttendenceCheck) => axios.post<void>('/attendenceChecks', activity),
-    update: (activity: AttendenceCheck) => axios.put<void>(`/attendenceChecks/${activity.id}`, activity),
-    delete: (id: string) => axios.delete<void>(`/attendenceChecks/${id}`)
+    create: (attendenceCheck: AttendenceCheck) => axios.post<void>('/attendenceChecks', attendenceCheck),
+    update: (attendenceCheck: AttendenceCheck) => axios.put<void>(`/attendenceChecks/${attendenceCheck.id}`, attendenceCheck),
+    delete: (id: string) => axios.delete<void>(`/attendenceChecks/${id}`),
+    month: (id:string) => request.get<AttendenceCheck[]>(`/attendenceChecks/month/${id}`),
+    data :(id:string) => request.get<AttendenceData>(`/attendenceChecks/${id}`)
 }
 
 const Account = {
@@ -168,7 +171,7 @@ const CountryNames = {
 }
 
 const Profiles = {
-    get : (username : string) => request.get<Profile>(`profiles/${username}`),
+    get : (username : string) => request.get<Profile>(`/profiles/${username}`),
     uploadPhoto:(file:Blob) => {
         let formData = new FormData();
         formData.append('File',file);
@@ -181,7 +184,10 @@ const Profiles = {
 }
 
 const Admin = {
-    listUser : () => request.get<User[]>('/admin')
+    listUser : () => request.get<User[]>('/admin'),
+    deleteUSer : (id:string) => request.delete(`/admin/${id}`),
+    editUser : (user : UserFormValues) => request.post<User>(`/admin/${user.id}`,user),
+    detail :(id:string) => request.get<User>(`/admin/${id}`)
 }
 
 const agent = {

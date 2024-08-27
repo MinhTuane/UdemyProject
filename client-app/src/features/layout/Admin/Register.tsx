@@ -8,16 +8,67 @@ import ValidationError from "../../errors/ValidationError";
 import MyDateInput from "../../../app/common/form/MyDateInput";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { roleOptions } from "../../../app/common/options/roleOptions";
+import { useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { UserFormValues } from "../../../app/models/user";
+import {v4 as uuid} from 'uuid';
+import { router } from "../../../app/router/route";
+import LoadingComponent from "../../../app/layout/loadingComponent";
 
 export default observer( function Register() {
-    const { userStore } = useStore();
+    const { userStore ,adminStore} = useStore();
+    const {register} = userStore;
+    const {updateUser,loadUser,loadingInitial} = adminStore;
 
+    const [user,setUser] = useState<UserFormValues>({
+        id:'',
+        role:'Staff',
+        displayName:'',
+        username:'',
+        email:'',
+        dateOfBirth:new Date(),
+        password:'',
+    });
+
+    const {id} = useParams();
+
+    useEffect(()=> {
+        if(id) {
+            loadUser(id).then((newUser)=> {
+                console.log(newUser);
+                
+                setUser({
+                    id:newUser!.id,
+                    email:newUser!.email,
+                    role:newUser?.role,
+                    username : newUser?.username,
+                    displayName : newUser?.displayName,
+                    password :newUser!.password,
+                    dateOfBirth : newUser?.dateOfBirth
+                })
+            })
+        }
+    },[id,loadUser])
+
+    function handleFormSubmit(user: UserFormValues,setErrors : any) {
+        if (user.id!.length === 0) {
+            let newUser = {
+                ...user,
+                id: uuid()
+            };
+            register(newUser).then(() => router.navigate(`/login`).catch(error => setErrors(error))
+            )
+        } else {
+            updateUser(user).then(() => router.navigate(`/profile/:username`)).catch(error => setErrors(error))
+        }
+    }
+
+    if(loadingInitial) return <LoadingComponent content="loading"/>
     return (
         <Formik
-        initialValues = {{role:'Staff',displayName:'',username:'',email:'',dateOfBirth:new Date(),password:'',error:null}}
-        onSubmit ={(values,{setErrors}) => 
-            userStore.register(values).catch(error =>setErrors({error})
-        )}
+        initialValues = {user}
+        onSubmit ={(values,{setErrors}) => handleFormSubmit(values,setErrors)}
+        enableReinitialize
         validationSchema={Yup.object({
             displayName : Yup.string().required(),
             username : Yup.string().required(),
@@ -46,7 +97,7 @@ export default observer( function Register() {
                     <ErrorMessage
                         name="error" 
                         render={()=> 
-                            <ValidationError errors={errors.error as unknown as string[]}/>}
+                            <ValidationError errors={errors as unknown as string[]}/>}
                             />
                     <Button 
                         disabled={!isValid || !dirty || isSubmitting}

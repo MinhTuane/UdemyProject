@@ -1,14 +1,36 @@
 
 import React, { useEffect, useState } from 'react';
-import { Container, Header, Statistic, Loader, Segment, Item } from 'semantic-ui-react';
+import { Container, Header, Statistic, Segment, Item } from 'semantic-ui-react';
+import { useStore } from '../../../app/stores/store';
+import { AttendenceData } from '../../../app/models/attendenceData';
+import { observer } from 'mobx-react-lite';
+import LoadingComponent from '../../../app/layout/loadingComponent';
 
-export default function SalarySummary() {
-    const [data, setData] = useState({ worked: 17, late: 3, off: 1 });
+export default observer (function SalarySummary() {
+
+    const {attendenceCheckStore,userStore : {getUser,user}} = useStore();
+    const {getData,loading,iniData} = attendenceCheckStore;
+
+    const [data, setData] = useState<AttendenceData>({ worked: 0, late: 0, off: 0 });
+
+    useEffect(()=> {
+        if(!user) getUser();
+    },[user,getUser]);
+
+    useEffect(()=> {
+        if(!iniData && user)  getData(user.id);
+        if(iniData) setData(iniData)
+        console.log(iniData);
+        
+    },[iniData,getData]);
+
     const [salaryDetails, setSalaryDetails] = useState({
         baseSalary: 300000,
         latePenalty: 50000,
         reward: data.worked > 24 ? 1500000 : 0,
     });
+
+    if(loading) return <LoadingComponent content='loading'/>
     return (
         <>
             <Container  textAlign='center' className='salary-summary-container'>
@@ -56,5 +78,5 @@ export default function SalarySummary() {
             </Segment.Group>
         </>
     );
-};
+});
 

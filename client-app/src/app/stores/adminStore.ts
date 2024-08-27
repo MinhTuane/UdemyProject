@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx"
 import agent from "../api/agent";
-import { User } from "../models/user";
+import { User, UserFormValues } from "../models/user";
 
 export default class AdminStore {
     users = new Map<string, User>();
@@ -27,6 +27,55 @@ export default class AdminStore {
             runInAction(()=> {
                 this.loadingInitial = false;
             })
+        }
+    }
+
+    loadUser = async (id:string) => {
+        let user = this.users.get(id);
+        if(user) return user;
+        else {
+            this.loadingInitial = true;
+            try {
+                user = await agent.Admin.detail(id);
+                runInAction(()=> {
+                    this.users.set(user!.id,user!);
+                    this.loadingInitial=false;
+                })
+                return user;
+            } catch (error) {
+                console.log(error);
+                runInAction(()=> this.loadingInitial = false);
+                
+            }
+        }
+    }
+
+    updateUser = async (user:UserFormValues) => {
+        this.loadingInitial = true;
+        try {
+            var newUser =await agent.Admin.editUser(user);
+            runInAction(()=>{
+                this.users.set(newUser.id,newUser);
+                this.loadingInitial =false;
+            })
+        } catch (error) {
+            runInAction(()=>this.loadingInitial=false);
+            console.log(error);
+            
+        }
+    }
+
+    deleteUser = async (id : string) => {
+        this.loadingInitial = false;
+        try {
+            await agent.Admin.deleteUSer(id);
+            runInAction(()=> {
+                this.users.delete(id);
+                this.loadingInitial = false;
+            })
+        } catch (error) {
+            runInAction(()=>this.loadingInitial=false);
+            console.log(error);
         }
     }
 

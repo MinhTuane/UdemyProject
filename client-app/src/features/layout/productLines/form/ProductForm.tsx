@@ -11,6 +11,8 @@ import { Material } from "../../../../app/models/material";
 import { observer } from 'mobx-react-lite'
 import {v4 as uuid} from 'uuid';
 import { router } from "../../../../app/router/route";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 
 export default observer(function ProductForm() {
@@ -21,7 +23,7 @@ export default observer(function ProductForm() {
 
     const { materials, loadMaterials } = materialStore;
 
-    const {createProduct,updateProduct} = productStore;
+    const {createProduct,updateProduct,loadProduct,products} = productStore;
 
     const [product, setProduct] = useState<Product>({
         id:"",
@@ -35,6 +37,12 @@ export default observer(function ProductForm() {
         name: Yup.string().required('The Product name is required'),
         description: Yup.string().required('The Product Description is required'),
     })
+
+    const {id} = useParams();
+
+    useEffect(()=> {
+        if(id) loadProduct(id).then((product)=>setProduct(product!));
+    },[id,loadProduct])
 
     useEffect(() => {
         loadMaterials()
@@ -52,9 +60,9 @@ export default observer(function ProductForm() {
                 quantity :0,
                 isProducing : false
             };
-            createProduct(newProduct).then(()=> router.navigate(`/products/${newProduct.id}`))
+            createProduct(newProduct).then(()=> router.navigate(`/products`))
         } else {
-            updateProduct(product).then(()=> router.navigate(`/products/${product.id}`))
+            updateProduct(product).then(()=> router.navigate(`/products`))
         }
     }
 
@@ -118,6 +126,7 @@ export default observer(function ProductForm() {
                             type="submit"
                             content='Submit'
                         />
+                        <Button as={Link} to='/products' floated="right" type="button" content='Cancel' />
                     </Form>
                 )}
             </Formik>

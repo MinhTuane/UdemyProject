@@ -1,6 +1,6 @@
 import { Button, Icon, Item, Segment } from "semantic-ui-react";
-import { Product } from "../../../app/models/product";
-import { useStore } from "../../../app/stores/store";
+import { Product } from "../../../../../app/models/product";
+import { useStore } from "../../../../../app/stores/store";
 
 interface Props {
     product: Product
@@ -29,7 +29,7 @@ export default function ProductListItem({ product }: Props) {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image size="small" src='/assets/user.png' wrapped/>
+                        <Item.Image size="small" src='/assets/noImage.jpg' wrapped/>
                         <Item.Content>
                             <Item.Header>
                                 {product.name}</Item.Header>

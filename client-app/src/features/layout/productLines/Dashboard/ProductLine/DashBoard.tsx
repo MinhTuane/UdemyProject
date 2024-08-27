@@ -22,8 +22,7 @@ export default observer(function DashBoard() {
 
 
   const mainPanelRef = React.useRef<HTMLDivElement>(null);
- 
-  // this function opens and closes the sidebar on small devices
+  
   if(productLineStore.loadingInitial) return <LoadingComponent content="loading ..."/>
   return (
     <BackgroundColorContext.Consumer>

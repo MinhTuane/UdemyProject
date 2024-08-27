@@ -26,7 +26,7 @@ namespace Application.AttendenceChecks
                 var Date = DateTime.Today;
                 return Result<List<AttendenceCheck>>
                 .Success(await _context.AttendenceChecks
-                .Where(x=> x.Date >= Date && x.Date <= Date.AddDays(1)).ToListAsync());
+                .ToListAsync());
             }
         }
     }

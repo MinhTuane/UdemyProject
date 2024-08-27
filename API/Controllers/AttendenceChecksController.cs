@@ -16,9 +16,15 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAttendenceCheck(Guid id) 
+        public async Task<IActionResult> GetAttendenceDataThisMonth(string id) 
         {
-            return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
+            return HandleResult(await Mediator.Send(new AttendenceDataThisMonth.Query{UserId = id}));
+        }
+
+        [HttpGet("month/{id}")]
+        public async Task<IActionResult> GetAttendenceThisMonth(string id) 
+        {
+            return HandleResult(await Mediator.Send(new AttendenceByMonth.Query{UserId = id}));
         }
 
         [HttpPost]

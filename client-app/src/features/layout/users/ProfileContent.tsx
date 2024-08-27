@@ -7,6 +7,7 @@ interface Props {
     profile : Profile
 }
 export default function ProfileContent({profile} : Props) {
+
     const panes = [
         {menuItem : { key: 'users', icon: 'users', content: 'Profile' }, render: () => <ProfileDetail/>},
         {menuItem : { key: 'photos', icon: 'photo', content: 'Photos' }, render:() =><ProfilePhotos profile = {profile}/>},

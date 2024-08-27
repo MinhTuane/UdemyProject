@@ -13,11 +13,19 @@ export default observer( function ProfileDetail() {
     useEffect(()=> {
         if(user) getUser();
     },[user,getUser])
-    return (
+    const getBirthYear = (dateOfBirth:Date) => {
+        if (!dateOfBirth) return 'N/A';
+    
+        const date = new Date(dateOfBirth);
+    
+        return date.toLocaleDateString();
+      };
+    
+      return (
         <Segment.Group>
-            <Segment>Role : {user?.role}</Segment>
-            <Segment>Date Of Birth : {user?.dateOfBirth}</Segment>
-            <Segment>Line Id : {user?.productLineId}</Segment>
+          <Segment>Role: {user?.role || 'N/A'}</Segment>
+          <Segment>Date Of Birth: {getBirthYear(user?.dateOfBirth!)}</Segment>
+          <Segment>Line Id: {user?.productLineId || 'N/A'}</Segment>
         </Segment.Group>
-    )
+      );
 })

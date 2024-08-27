@@ -18,6 +18,8 @@ import AttendenceCheckForm from "../../features/layout/Admin/AttendenceCheckForm
 import Attendence from "../../features/layout/users/Attendence";
 import ManageUsers from "../../features/layout/Admin/ManageUsers";
 import Register from "../../features/layout/Admin/Register";
+import Products from "../../features/layout/Product/Products";
+import Materials from "../../features/layout/materials/Materials";
 
 export const routes: RouteObject[] = [
     {
@@ -25,6 +27,8 @@ export const routes: RouteObject[] = [
         element: <App/>,
         children:[
             {path:'activities',element:<ActivityDashboard/>},
+            {path:'products',element:<Products/>},
+            {path:'materials',element:<Materials/>},
             {path:'attendenceCheckForm',element:<AttendenceCheckForm/>},
             {path:'editUser/:id',element:<Register/>},
             {path:'manageUsers',element:<ManageUsers/>},
@@ -36,7 +40,9 @@ export const routes: RouteObject[] = [
             {path:'createCompany',element:<CompanyForm/>},
             {path:'manage/:id',element:<ActivityForm key='edit'/>},
             {path:'createMaterial',element:<MaterialForm key='create'/>},
+            {path:'manageMaterial/:id',element:<MaterialForm key='edit'/>},
             {path:'createProduct',element:<ProductForm key='create'/>},
+            {path:'manageProduct/:id',element:<ProductForm key='edit'/>},
             {path:'createPurchaseOrder',element:<PurchaseOrderForm key='create'/>},
             {path:'login',element:<LoginForm/>},
             {path:'profile/:username',element:<Profile/>},

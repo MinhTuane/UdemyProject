@@ -6,20 +6,20 @@ using FluentValidation;
 using MediatR;
 using Persistence;
 
-namespace Application.AttendenceChecks
+namespace Application.Admin
 {
     public class Edit
     {
         public class Command : IRequest<Result<Unit>> 
         {
-            public AttendenceCheck  AttendenceCheck{ get; set; }
+            public AppUser AppUser { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                
+                RuleFor(x=> x.AppUser).SetValidator(new UserValidator());
             }
         }
 
@@ -36,14 +36,16 @@ namespace Application.AttendenceChecks
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var attendenceCheck = await _context.AttendenceChecks.FindAsync(request.AttendenceCheck.Id);
+                var user = await _context.Users.FindAsync(request.AppUser.Id);
 
-                if(attendenceCheck == null) return null;
+                if(user ==null) return null;
 
-                _mapper.Map(request.AttendenceCheck,attendenceCheck);
+                _mapper.Map(request.AppUser,user);
 
-                var result = await _context.SaveChangesAsync() > 0;
-                if(!result) return Result<Unit>.Failure("Fail to update attendence check");
+                var result =await _context.SaveChangesAsync()>0;
+
+                if(!result) return Result<Unit>.Failure("Failed to update User");
+
                 return Result<Unit>.Success(Unit.Value);
             }
         }

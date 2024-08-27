@@ -52,10 +52,10 @@ export default observer(function MaterialForm() {
                 ...material,
                 id: uuid()
             };
-            createMaterial(newMaterial).then(() => router.navigate(`/materials/${newMaterial.id}`)
+            createMaterial(newMaterial).then(() => router.navigate(`/materials`)
             )
         } else {
-            updateMaterial(material).then(()=>router.navigate(`/materials/${material.id}`))
+            updateMaterial(material).then(()=>router.navigate(`/materials`))
         }
     }
 
@@ -101,7 +101,7 @@ export default observer(function MaterialForm() {
                                 positive
                                 type="submit"
                                 content='Submit' />
-                            <Button as={Link} to='/activities' floated="right" type="button" content='Cancel' />
+                            <Button as={Link} to='/materials' floated="right" type="button" content='Cancel' />
                         </Form>
                     )}
                 </Formik>

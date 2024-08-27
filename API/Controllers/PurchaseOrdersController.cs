@@ -41,7 +41,7 @@ namespace API.Controllers
            return HandleResult( await Mediator.Send(new Delete.Command{Id=id}));
         }
 
-        [HttpGet("/country/{id}")]
+        [HttpGet("country/{id}")]
         public async Task<IActionResult> GetCountries(Guid id) 
         {
             return HandleResult(await Mediator.Send(new GetCountry.Query{PruductId = id}));

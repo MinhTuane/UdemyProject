@@ -36,6 +36,7 @@ namespace API.Controllers
             {
                 return new UserDto
                 {
+                    Id=user.Id,
                     DisplayName= user.DisplayName,
                     Image = user?.Photos?.FirstOrDefault(x=>x.IsMain)?.Url,
                     Token =await _tokenService.CreateToken(user),
@@ -98,6 +99,7 @@ namespace API.Controllers
             var role =await  _userManager.GetRolesAsync(user);
             return new UserDto
                 {
+                    Id= user.Id,
                     DisplayName = user.DisplayName,
                     Image = user?.Photos?.FirstOrDefault(x=>x.IsMain)?.Url,
                     Token = await _tokenService.CreateToken(user),

@@ -4,18 +4,21 @@ export interface User {
     displayName: string,
     token:string,
     image?:string,
-    dateOfBirth : string,
+    dateOfBirth : Date | null ,
     productLineId? : string,
-    role: string
+    role: string,
+    email : string,
+    password : string
 }
 
 export interface UserFormValues {
+    id?:string;
     email: string;
     password: string;
     displayName?:string;
     username?:string;
     role?:string;
-    dateOfBirth?:Date;
+    dateOfBirth?:Date | null;
 }
 
 export interface Photo {

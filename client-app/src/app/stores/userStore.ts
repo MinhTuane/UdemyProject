@@ -27,8 +27,7 @@ export default class UserStore {
             store.modalStore.closeModal();
         } catch (error) {
             console.log(error);
-        }
-            
+        }      
     }
 
     register = async (creds : UserFormValues) => {

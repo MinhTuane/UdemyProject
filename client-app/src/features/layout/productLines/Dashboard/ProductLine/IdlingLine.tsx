@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { useStore } from "../../../../../app/stores/store";
-import ProductListItem from "../../../Product/ProductListItem";
+
 import { observer } from "mobx-react-lite";
 import { Product } from "../../../../../app/models/product";
+import ProductListItem from "./ProductListItem";
 
 export default observer (function IdlingLine() {
     const { productStore } = useStore();

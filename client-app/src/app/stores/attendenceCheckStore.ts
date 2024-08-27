@@ -3,6 +3,7 @@ import agent from "../api/agent";
 import { v4 as uuid } from 'uuid';
 import {format} from 'date-fns';
 import { AttendenceCheck } from "../models/attendenceCheck";
+import { AttendenceData } from "../models/attendenceData";
 
 export default class AttendenceCheckStore {
     attendenceChecks: AttendenceCheck[] = [];
@@ -10,7 +11,7 @@ export default class AttendenceCheckStore {
     selectedAttendenceCheck: AttendenceCheck | undefined = undefined;
     loading = false;
     loadingInitial = false;
-
+    iniData :AttendenceData | undefined =  undefined;
 
     constructor() {
         makeAutoObservable(this)
@@ -113,6 +114,8 @@ export default class AttendenceCheckStore {
             runInAction(() => {
                 this.loading = false;
             })
+            console.log(error);
+            
         }
     }
     deleteAttendenceCheck = async (id: string) => {
@@ -127,6 +130,19 @@ export default class AttendenceCheckStore {
             runInAction(() => {
                 this.loading = false;
             })
+        }
+    }
+
+    getData = async (id:string) => {
+        this.loading = true;
+        try {
+            var data = await agent.AttendenceChecks.data(id);
+            runInAction(()=> {
+                this.iniData =data;
+                this.loading = false
+            })           
+        } catch (error) {
+            runInAction(()=> this.loading = false)
         }
     }
 }

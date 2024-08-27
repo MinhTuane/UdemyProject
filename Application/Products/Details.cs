@@ -29,7 +29,8 @@ namespace Application.Products
             public async Task<Result<Product>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var product = await _context.Products
-            .Include(p => p.ProductionRecords) // Include related ProductionRecords
+            .Include(p=>p.MaterialProducts)
+                .ThenInclude(mp=> mp.Material)
             .FirstOrDefaultAsync(p => p.Id == request.Id);
 
                 if (product == null)

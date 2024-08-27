@@ -10,11 +10,12 @@ interface props {
 export default function UserItem({ user }: props) {
 
     const { adminStore } = useStore();
+    const {deleteUser,updateUser} =adminStore;
     const [target, setTarget] = useState('');
 
     function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name)
-        
+        deleteUser(id);
     }
     return (
         <Segment.Group>

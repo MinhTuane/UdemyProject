@@ -19,6 +19,7 @@ namespace Application.Core
             CreateMap<AttendenceCheck,AttendenceCheck>();
             CreateMap<PurchaseOrder,PurchaseOrder>();
             CreateMap<ProductionRecord,ProductionRecord>();
+            CreateMap<AppUser,AppUser>();
             CreateMap<Salary,Salary>();
             CreateMap<AppUser,Profiles.Profile>()
                 .ForMember(d => d.Image, o=> o.MapFrom(s =>s.Photos.FirstOrDefault(x =>x.IsMain).Url));  

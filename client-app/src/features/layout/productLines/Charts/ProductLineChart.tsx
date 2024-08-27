@@ -122,28 +122,20 @@ let chart1_2_options = {
   // // // used inside src/views/Dashboard.js
   // #########################################
   let chartExample3 = {
-    data: (canvas:any) => {
-      let ctx = canvas.getContext("2d");
-  
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-  
-      gradientStroke.addColorStop(1, "rgba(72,72,176,0.1)");
-      gradientStroke.addColorStop(0.4, "rgba(72,72,176,0.0)");
-      gradientStroke.addColorStop(0, "rgba(119,52,169,0)"); //purple colors
-  
+    data: (data:ChartData) => {
       return {
-        labels: ["USA", "GER", "AUS", "UK", "RO", "BR"],
+        labels: data.labels,
         datasets: [
           {
             label: "Countries",
             fill: true,
-            backgroundColor: gradientStroke,
-            hoverBackgroundColor: gradientStroke,
+            backgroundColor: "rgba(72,72,176,0.1)",
+            hoverBackgroundColor: "rgba(72,72,176,0.0)",
             borderColor: "#d048b6",
             borderWidth: 2,
             borderDash: [],
             borderDashOffset: 0.0,
-            data: [53, 20, 10, 80, 100, 45],
+            data: data.data,
           },
         ],
       };
